@@ -1,0 +1,19 @@
+// NodeNext -> Use modern Node.js rules for ESM and CommonJS.
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext", // what kind of JS import/export typescript must produce
+    "moduleResolution": "NodeNext", // how ts will find the file behind an import
+
+    "rootDir": "./src",
+    "outDir": "./dist",
+
+    "strict": true,
+    "esModuleInterop": true,
+
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  },
+
+  "include": ["src"]
+}
