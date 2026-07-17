@@ -1,7 +1,13 @@
+type FieldError = {
+  field: string;
+  message: string;
+};
+
 class AppError extends Error {
   constructor(
     public statusCode: number,
     message: string,
+    public errors?: FieldError[],
   ) {
     super(message);
     this.name = "AppError";
@@ -9,8 +15,8 @@ class AppError extends Error {
 }
 
 class ValidationError extends AppError {
-  constructor(message: string) {
-    super(400, message);
+  constructor(message: string, errors?: FieldError[]) {
+    super(400, message, errors);
     this.name = "ValidationError";
   }
 }
@@ -30,3 +36,4 @@ class UnauthorizedError extends AppError {
 }
 
 export { AppError, ValidationError, ConflictError, UnauthorizedError };
+export type { FieldError };
