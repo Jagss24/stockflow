@@ -4,6 +4,8 @@ import {
   findUserByEmail,
 } from "../repositories/user.repository.js";
 import { TRegisterBody } from "../schemas/auth.schema.js";
+import bcrypt from "bcrypt";
+import { signToken } from "../utils/jwt.js";
 
 const registerUser = async (body: TRegisterBody) => {
   const { password, email, ...rest } = body;
@@ -13,11 +15,13 @@ const registerUser = async (body: TRegisterBody) => {
     throw new ConflictError("Email id already exist");
   }
 
-  //   const hashedPassword = await bcrypt.hash(password, 10); // will implement hashing later
+  const hashedPassword = await bcrypt.hash(password, 10);
 
-  const newUser = { ...rest, email, password: password };
+  const newUser = { ...rest, email, password: hashedPassword };
   const user = createUser(newUser);
-  return user;
+
+  const token = signToken(user, "3d");
+  return { user, token };
 };
 
 export { registerUser };
