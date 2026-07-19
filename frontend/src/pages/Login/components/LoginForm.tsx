@@ -71,24 +71,6 @@ const LoginForm = ({ form, isSubmitting, onSubmit }: LoginFormProps) => {
         )}
       />
 
-      <div className="-mt-1 flex items-center justify-between gap-4 text-sm font-semibold">
-        <label className="flex items-center gap-3 text-text">
-          <input
-            type="checkbox"
-            className="size-4 rounded border-border text-primary accent-primary"
-            disabled={isSubmitting}
-          />
-          <span>Remember me</span>
-        </label>
-
-        <a
-          href="#"
-          className="text-primary transition hover:text-primary-hover"
-        >
-          Forgot password?
-        </a>
-      </div>
-
       <UiButton
         type="submit"
         variant="primary"
