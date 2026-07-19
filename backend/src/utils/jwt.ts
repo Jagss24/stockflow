@@ -1,6 +1,6 @@
 import jwt, { SignOptions } from "jsonwebtoken";
-import { IUser } from "../data/users.js";
 import { env } from "../config/env.js";
+import { TSafeUser } from "../types/user.type.js";
 
 const signToken = (
   payload: object,
@@ -12,7 +12,7 @@ const signToken = (
 };
 
 const verifyToken = (token: string) => {
-  return jwt.verify(token, env.JWT_SECRET_KEY) as Omit<IUser, "password">;
+  return jwt.verify(token, env.JWT_SECRET_KEY) as TSafeUser;
 };
 
 export { signToken, verifyToken };
