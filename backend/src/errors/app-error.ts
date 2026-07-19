@@ -35,5 +35,18 @@ class UnauthorizedError extends AppError {
   }
 }
 
-export { AppError, ValidationError, ConflictError, UnauthorizedError };
+class CustomError extends AppError {
+  constructor(statusCode: number, message: string) {
+    super(statusCode, message);
+    this.name = "CustomError";
+  }
+}
+
+export {
+  AppError,
+  ValidationError,
+  ConflictError,
+  UnauthorizedError,
+  CustomError,
+};
 export type { FieldError };
