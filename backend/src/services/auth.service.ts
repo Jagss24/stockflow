@@ -27,21 +27,18 @@ const registerUser = async (body: TRegisterBody) => {
 
 const loginUser = async (body: TLoginBody) => {
   const { email, password } = body;
-  const exisitingUser = await findUserByEmail(email);
-  if (!exisitingUser) {
+  const existingUser = await findUserByEmail(email);
+  if (!existingUser) {
     throw new UnauthorizedError("Invalid credentials");
   }
 
-  const passwordMatched = await bcrypt.compare(
-    password,
-    exisitingUser.password,
-  );
+  const passwordMatched = await bcrypt.compare(password, existingUser.password);
 
   if (!passwordMatched) {
     throw new UnauthorizedError("Invalid credentials");
   }
 
-  const safeUser = toSafeUser(exisitingUser);
+  const safeUser = toSafeUser(existingUser);
   const token = signToken(safeUser, "3d");
   return { user: safeUser, token };
 };

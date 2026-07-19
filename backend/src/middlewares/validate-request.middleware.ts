@@ -3,7 +3,7 @@ import { z } from "zod";
 import { ValidationError } from "../errors/app-error.js";
 
 const validateRequest = (schema: z.ZodType) => {
-  return (req: Request, res: Response, next: NextFunction) => {
+  return (req: Request, _: Response, next: NextFunction) => {
     const result = schema.safeParse(req.body);
 
     if (!result.success) {

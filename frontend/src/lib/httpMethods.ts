@@ -12,7 +12,7 @@ const handleGetRequest = async <TResponse>({
   signal?: AbortSignal;
 }): Promise<TResponse> => {
   const query = searchParams
-    ? `${url}${createSearchParams(Object.entries(searchParams).reduce((acc, [k, v]) => ({ ...acc, [k]: String(v) }), {}))}`
+    ? `${url}?${createSearchParams(Object.entries(searchParams).reduce((acc, [k, v]) => ({ ...acc, [k]: String(v) }), {}))}`
     : url;
 
   const config = signal ? { signal } : {};

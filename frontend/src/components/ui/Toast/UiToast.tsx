@@ -3,7 +3,7 @@ import { JSX } from "react";
 import { toast } from "sonner";
 
 interface IUiToastProps {
-  toastContent: any;
+  toastContent: string | number;
   icon: JSX.Element;
   message: string;
   className: string;

@@ -3,7 +3,7 @@ import { AppError } from "../errors/app-error.js";
 
 const errorMiddleware = (
   err: Error,
-  req: Request,
+  _: Request,
   res: Response,
   next: NextFunction,
 ) => {

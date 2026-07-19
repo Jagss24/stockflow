@@ -2,7 +2,7 @@ import { Router } from "express";
 
 const healthRouter = Router();
 
-healthRouter.get("/", (req, res) => {
+healthRouter.get("/", (_, res) => {
   res.send("Hello human");
 });
 
