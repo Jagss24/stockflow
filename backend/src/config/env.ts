@@ -10,6 +10,7 @@ const envSchema = z.object({
   PORT: z.coerce.number().int().positive(),
   JWT_SECRET_KEY: z.string().trim().min(1, "JWT_SECRET_KEY is required"),
   FRONTEND_ORIGIN: z.url("FRONTEND_ORIGIN must be a valid URL"),
+  DATABASE_URL: z.string().trim().min(1, "Database URL not provided"),
 });
 
 const result = envSchema.safeParse(process.env);
