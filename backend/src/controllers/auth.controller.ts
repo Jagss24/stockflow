@@ -1,5 +1,5 @@
-import { TRegisterBody } from "../schemas/auth.schema.js";
-import { registerUser } from "../services/auth.service.js";
+import { TLoginBody, TRegisterBody } from "../schemas/auth.schema.js";
+import { loginUser, registerUser } from "../services/auth.service.js";
 import { asyncHandler } from "../utils/async-handler.js";
 
 const register = asyncHandler<TRegisterBody>(async (req, res) => {
@@ -9,9 +9,20 @@ const register = asyncHandler<TRegisterBody>(async (req, res) => {
     .status(201)
     .cookie("accessToken", token, {
       httpOnly: true,
-      maxAge: 1000 * 60 * 60 * 24 * 7,
+      maxAge: 1000 * 60 * 60 * 24 * 3,
     })
     .json({ data: user, success: true });
 });
 
-export { register };
+const login = asyncHandler<TLoginBody>(async (req, res) => {
+  const { user, token } = await loginUser(req.body);
+  return res
+    .status(200)
+    .cookie("accessToken", token, {
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24 * 3,
+    })
+    .json({ data: user, success: true });
+});
+
+export { register, login };

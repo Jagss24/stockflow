@@ -1,9 +1,9 @@
-import { ConflictError } from "../errors/app-error.js";
+import { ConflictError, UnauthorizedError } from "../errors/app-error.js";
 import {
   createUser,
   findUserByEmail,
 } from "../repositories/user.repository.js";
-import { TRegisterBody } from "../schemas/auth.schema.js";
+import { TLoginBody, TRegisterBody } from "../schemas/auth.schema.js";
 import bcrypt from "bcrypt";
 import { signToken } from "../utils/jwt.js";
 import { toSafeUser } from "../mapper/user.mapper.js";
@@ -25,4 +25,24 @@ const registerUser = async (body: TRegisterBody) => {
   return { user: safeUser, token };
 };
 
-export { registerUser };
+const loginUser = async (body: TLoginBody) => {
+  const { email, password } = body;
+  const exisitingUser = await findUserByEmail(email);
+  if (!exisitingUser) {
+    throw new UnauthorizedError("Invalid credentials");
+  }
+
+  const passwordMatched = await bcrypt.compare(
+    password,
+    exisitingUser.password,
+  );
+
+  if (!passwordMatched) {
+    throw new UnauthorizedError("Invalid credentials");
+  }
+
+  const safeUser = toSafeUser(exisitingUser);
+  const token = signToken(safeUser, "3d");
+  return { user: safeUser, token };
+};
+export { registerUser, loginUser };
