@@ -22,7 +22,7 @@ const variantClassNames: Record<UIButtonVariant, string> = {
     "border-border bg-surface text-heading shadow-sm hover:border-border-strong hover:bg-surface-muted focus-visible:ring-primary-soft",
 };
 
-const UIButton = ({
+const UiButton = ({
   variant = "default",
   type = "button",
   leftIcon,
@@ -67,7 +67,7 @@ const UIButton = ({
   );
 };
 
-UIButton.displayName = "UIButton";
+UiButton.displayName = "UiButton";
 
 export type { UIButtonProps, UIButtonVariant };
-export default UIButton;
+export default UiButton;

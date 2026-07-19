@@ -86,7 +86,7 @@ const UiInput = ({
       {hasDescription && (
         <p
           id={descriptionId}
-          className={cn("text-xs text-text-muted", error && "text-error")}
+          className={cn("text-xs text-text-muted", error && "text-error!")}
         >
           {error ?? helperText}
         </p>
