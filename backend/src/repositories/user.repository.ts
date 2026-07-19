@@ -1,19 +1,20 @@
-import users, { IUser } from "../data/users.js";
+import { prisma } from "../lib/prisma.js";
+import { TCreateUserData, TSafeUser, TUser } from "../types/user.type.js";
 
-const createUser = (data: Omit<IUser, "id">) => {
-  const newId = users.length + 1;
-  const newUser = { ...data, id: newId };
-  users.push(newUser);
-  const { password, ...safeUser } = newUser;
-  return safeUser;
-};
-
-const findUserByEmail = (email: string) => {
-  const existingEmail = users.find((u) => {
-    return u.email === email;
+const createUser = async (data: TCreateUserData) => {
+  const newUser = await prisma.user.create({
+    data: { name: data.name, email: data.email, password: data.password },
   });
 
-  return existingEmail ?? null;
+  return newUser;
+};
+
+const findUserByEmail = async (email: string) => {
+  const existingUser = await prisma.user.findUnique({
+    where: { email: email },
+  });
+
+  return existingUser;
 };
 
 export { createUser, findUserByEmail };
