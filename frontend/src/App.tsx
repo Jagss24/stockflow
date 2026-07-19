@@ -1,5 +1,14 @@
+import { Suspense } from "react";
+import { Outlet } from "react-router-dom";
+
 const App = () => {
-  return <div>Hello Human</div>;
+  return (
+    <div>
+      <Suspense>
+        <Outlet />
+      </Suspense>
+    </div>
+  );
 };
 
 export default App;
