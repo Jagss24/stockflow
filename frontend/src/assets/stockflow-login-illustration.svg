@@ -1,0 +1,291 @@
+<svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F7F9FC"/>
+      <stop offset="100%" stop-color="#F1F5F9"/>
+    </linearGradient>
+
+    <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3B82F6"/>
+      <stop offset="100%" stop-color="#1D4ED8"/>
+    </linearGradient>
+
+    <linearGradient id="blueGradSoft" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#EFF4FF"/>
+      <stop offset="100%" stop-color="#DBEAFE"/>
+    </linearGradient>
+
+    <linearGradient id="tealGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#14B8A6"/>
+      <stop offset="100%" stop-color="#0F766E"/>
+    </linearGradient>
+
+    <linearGradient id="roofGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563EB"/>
+      <stop offset="100%" stop-color="#0F766E"/>
+    </linearGradient>
+
+    <linearGradient id="truckGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#3B82F6"/>
+      <stop offset="100%" stop-color="#2563EB"/>
+    </linearGradient>
+
+    <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#2563EB" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#0F766E" stop-opacity="0.45"/>
+    </linearGradient>
+
+    <filter id="softShadow" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#101828" flood-opacity="0.10"/>
+    </filter>
+
+    <filter id="cardShadow" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#101828" flood-opacity="0.09"/>
+    </filter>
+
+    <filter id="softBlur" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="18"/>
+    </filter>
+  </defs>
+
+  <!-- BACKGROUND -->
+  <rect x="0" y="0" width="1200" height="800" fill="url(#bgGrad)"/>
+
+  <!-- soft depth blobs -->
+  <circle cx="120" cy="120" r="150" fill="#DBEAFE" opacity="0.45" filter="url(#softBlur)"/>
+  <circle cx="1080" cy="700" r="170" fill="#CCFBF1" opacity="0.45" filter="url(#softBlur)"/>
+  <circle cx="1000" cy="90" r="110" fill="#DBEAFE" opacity="0.35" filter="url(#softBlur)"/>
+  <circle cx="60" cy="680" r="120" fill="#CCFBF1" opacity="0.3" filter="url(#softBlur)"/>
+
+  <!-- floating geometric accents -->
+  <g opacity="0.5">
+    <rect x="150" y="230" width="18" height="18" rx="5" fill="none" stroke="#94A3B8" stroke-width="2" transform="rotate(18 159 239)"/>
+    <circle cx="1050" cy="240" r="7" fill="#0F766E" opacity="0.35"/>
+    <circle cx="700" cy="70" r="6" fill="#2563EB" opacity="0.35"/>
+    <rect x="990" y="470" width="14" height="14" rx="4" fill="none" stroke="#0F766E" stroke-width="2" transform="rotate(-12 997 477)"/>
+    <circle cx="330" cy="120" r="5" fill="#2563EB" opacity="0.3"/>
+    <path d="M400 660 l8 -8 8 8 -8 8 z" fill="none" stroke="#94A3B8" stroke-width="2" opacity="0.6"/>
+  </g>
+
+  <!-- ============ CONNECTION LINES (behind main shapes) ============ -->
+  <g fill="none" stroke="url(#lineGrad)" stroke-width="2.5" stroke-dasharray="2 8" stroke-linecap="round">
+    <path d="M470 330 C 360 300, 300 300, 235 320"/>
+    <path d="M560 340 C 650 260, 720 220, 790 200"/>
+    <path d="M600 360 C 720 330, 830 320, 940 330"/>
+    <path d="M600 420 C 720 440, 820 470, 930 500"/>
+    <path d="M560 470 C 640 540, 720 590, 800 620"/>
+    <path d="M470 470 C 420 520, 360 560, 300 610"/>
+    <path d="M300 380 C 280 340, 270 300, 262 262"/>
+  </g>
+
+  <!-- flow dots along connections -->
+  <g fill="#2563EB" opacity="0.55">
+    <circle cx="360" cy="305" r="4"/>
+    <circle cx="655" cy="255" r="4"/>
+    <circle cx="760" cy="325" r="4"/>
+    <circle cx="800" cy="478" r="4"/>
+    <circle cx="690" cy="555" r="4"/>
+    <circle cx="360" cy="545" r="4"/>
+  </g>
+
+  <!-- ============ SHELVING UNIT (left) ============ -->
+  <g filter="url(#cardShadow)">
+    <rect x="80" y="330" width="200" height="300" rx="14" fill="#FFFFFF" stroke="#D9E2EC" stroke-width="1.5"/>
+  </g>
+  <!-- shelf dividers -->
+  <g stroke="#D9E2EC" stroke-width="2">
+    <line x1="80" y1="410" x2="280" y2="410"/>
+    <line x1="80" y1="490" x2="280" y2="490"/>
+    <line x1="80" y1="570" x2="280" y2="570"/>
+  </g>
+  <!-- boxes on shelves -->
+  <g>
+    <rect x="100" y="352" width="52" height="42" rx="8" fill="url(#blueGradSoft)" stroke="#2563EB" stroke-width="1.5"/>
+    <rect x="168" y="358" width="42" height="36" rx="7" fill="#CCFBF1" stroke="#0F766E" stroke-width="1.5"/>
+    <rect x="222" y="350" width="40" height="44" rx="7" fill="#FFFFFF" stroke="#D9E2EC" stroke-width="1.5"/>
+
+    <rect x="100" y="432" width="46" height="40" rx="7" fill="#FFFFFF" stroke="#D9E2EC" stroke-width="1.5"/>
+    <rect x="158" y="428" width="56" height="44" rx="8" fill="url(#blueGradSoft)" stroke="#2563EB" stroke-width="1.5"/>
+    <rect x="226" y="434" width="36" height="38" rx="7" fill="#CCFBF1" stroke="#0F766E" stroke-width="1.5"/>
+
+    <rect x="100" y="512" width="40" height="40" rx="7" fill="#CCFBF1" stroke="#0F766E" stroke-width="1.5"/>
+    <rect x="150" y="508" width="50" height="44" rx="8" fill="#FFFFFF" stroke="#D9E2EC" stroke-width="1.5"/>
+    <rect x="212" y="514" width="48" height="38" rx="7" fill="url(#blueGradSoft)" stroke="#2563EB" stroke-width="1.5"/>
+
+    <rect x="108" y="592" width="46" height="30" rx="7" fill="url(#blueGradSoft)" stroke="#2563EB" stroke-width="1.5"/>
+    <rect x="170" y="588" width="42" height="34" rx="7" fill="#FFFFFF" stroke="#D9E2EC" stroke-width="1.5"/>
+  </g>
+
+  <!-- QR label tag pinned on a shelf box -->
+  <g transform="translate(228,346)">
+    <rect x="0" y="0" width="30" height="30" rx="6" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.5"/>
+    <g fill="#0F766E">
+      <rect x="5" y="5" width="6" height="6"/>
+      <rect x="19" y="5" width="6" height="6"/>
+      <rect x="5" y="19" width="6" height="6"/>
+      <rect x="14" y="9" width="3" height="3"/>
+      <rect x="19" y="14" width="3" height="3"/>
+      <rect x="14" y="19" width="3" height="3"/>
+      <rect x="19" y="19" width="3" height="3"/>
+    </g>
+  </g>
+
+  <!-- ============ BARCODE SCANNER (scanning shelf) ============ -->
+  <g transform="translate(228,240)" filter="url(#cardShadow)">
+    <path d="M6 0 h20 a6 6 0 0 1 6 6 v46 a6 6 0 0 1 -6 6 h-20 a6 6 0 0 1 -6 -6 v-46 a6 6 0 0 1 6 -6 z" fill="url(#blueGrad)"/>
+    <rect x="6" y="10" width="20" height="14" rx="3" fill="#EFF4FF"/>
+    <g stroke="#1D4ED8" stroke-width="1.4">
+      <line x1="9" y1="12" x2="9" y2="22"/>
+      <line x1="12" y1="12" x2="12" y2="22"/>
+      <line x1="15.5" y1="12" x2="15.5" y2="22"/>
+      <line x1="18" y1="12" x2="18" y2="22"/>
+      <line x1="21.5" y1="12" x2="21.5" y2="22"/>
+    </g>
+    <circle cx="16" cy="38" r="4.5" fill="#EFF4FF"/>
+  </g>
+  <!-- scan beam -->
+  <path d="M244 300 L262 350" stroke="#0F766E" stroke-width="2" stroke-dasharray="1 6" stroke-linecap="round" opacity="0.7"/>
+
+  <!-- ============ CENTRAL WAREHOUSE ============ -->
+  <g filter="url(#softShadow)">
+    <ellipse cx="500" cy="618" rx="190" ry="16" fill="#101828" opacity="0.06"/>
+    <!-- main body -->
+    <rect x="360" y="360" width="280" height="230" rx="18" fill="#FFFFFF" stroke="#D9E2EC" stroke-width="1.5"/>
+    <!-- roof -->
+    <path d="M348 372 L500 288 L652 372 a14 14 0 0 1 -8 24 L360 396 a14 14 0 0 1 -12 -24 Z" fill="url(#roofGrad)"/>
+  </g>
+
+  <!-- warehouse windows -->
+  <g fill="#DBEAFE" stroke="#2563EB" stroke-width="1.5">
+    <rect x="386" y="404" width="40" height="40" rx="8"/>
+    <rect x="480" y="404" width="40" height="40" rx="8"/>
+  </g>
+  <!-- warehouse pulse dot on roof (real-time indicator) -->
+  <circle cx="500" cy="330" r="7" fill="#16A34A"/>
+  <circle cx="500" cy="330" r="13" fill="none" stroke="#16A34A" stroke-width="1.5" opacity="0.5"/>
+
+  <!-- loading dock door -->
+  <rect x="560" y="404" width="60" height="80" rx="8" fill="#F1F5F9" stroke="#D9E2EC" stroke-width="1.5"/>
+  <g stroke="#D9E2EC" stroke-width="1.5">
+    <line x1="560" y1="420" x2="620" y2="420"/>
+    <line x1="560" y1="436" x2="620" y2="436"/>
+    <line x1="560" y1="452" x2="620" y2="452"/>
+    <line x1="560" y1="468" x2="620" y2="468"/>
+  </g>
+
+  <!-- main entrance -->
+  <rect x="416" y="470" width="70" height="120" rx="0" fill="url(#blueGradSoft)"/>
+  <rect x="416" y="470" width="70" height="120" fill="none" stroke="#2563EB" stroke-width="2"/>
+  <line x1="451" y1="470" x2="451" y2="590" stroke="#2563EB" stroke-width="1.5" opacity="0.5"/>
+
+  <!-- warehouse signage -->
+  <rect x="440" y="360" width="120" height="30" rx="8" fill="url(#blueGrad)"/>
+  <text x="500" y="380" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing="1.5">STOCKFLOW</text>
+
+  <!-- ============ DELIVERY TRUCK (bottom right) ============ -->
+  <g transform="translate(760,540)" filter="url(#cardShadow)">
+    <ellipse cx="150" cy="168" rx="150" ry="12" fill="#101828" opacity="0.07"/>
+    <!-- trailer -->
+    <rect x="0" y="40" width="170" height="100" rx="12" fill="#FFFFFF" stroke="#D9E2EC" stroke-width="2"/>
+    <rect x="14" y="54" width="142" height="34" rx="8" fill="url(#blueGradSoft)"/>
+    <rect x="14" y="96" width="66" height="30" rx="6" fill="#F1F5F9" stroke="#D9E2EC" stroke-width="1.5"/>
+    <rect x="90" y="96" width="66" height="30" rx="6" fill="#F1F5F9" stroke="#D9E2EC" stroke-width="1.5"/>
+    <!-- cab -->
+    <path d="M170 70 h44 a14 14 0 0 1 14 14 v40 a6 6 0 0 1 -6 6 h-52 z" fill="url(#truckGrad)"/>
+    <rect x="184" y="82" width="30" height="24" rx="6" fill="#DBEAFE"/>
+    <!-- wheels -->
+    <circle cx="46" cy="148" r="16" fill="#344256"/>
+    <circle cx="46" cy="148" r="6" fill="#F1F5F9"/>
+    <circle cx="196" cy="148" r="16" fill="#344256"/>
+    <circle cx="196" cy="148" r="6" fill="#F1F5F9"/>
+  </g>
+  <!-- motion lines -->
+  <g stroke="#94A3B8" stroke-width="2.5" stroke-linecap="round" opacity="0.45">
+    <line x1="730" y1="600" x2="700" y2="600"/>
+    <line x1="730" y1="618" x2="690" y2="618"/>
+    <line x1="730" y1="636" x2="705" y2="636"/>
+  </g>
+
+  <!-- ============ FLOATING UI CARDS ============ -->
+
+  <!-- Card: Stock Levels (large, top-left) -->
+  <g filter="url(#cardShadow)">
+    <rect x="70" y="70" width="220" height="128" rx="16" fill="#FFFFFF" stroke="#D9E2EC" stroke-width="1.5"/>
+  </g>
+  <text x="94" y="102" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="700" fill="#101828">Stock Levels</text>
+  <text x="94" y="122" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#64748B">Updated in real time</text>
+  <g>
+    <rect x="94" y="140" width="18" height="42" rx="4" fill="#DBEAFE"/>
+    <rect x="120" y="126" width="18" height="56" rx="4" fill="url(#blueGrad)"/>
+    <rect x="146" y="150" width="18" height="32" rx="4" fill="#CCFBF1"/>
+    <rect x="172" y="118" width="18" height="64" rx="4" fill="url(#tealGrad)"/>
+    <rect x="198" y="138" width="18" height="44" rx="4" fill="#DBEAFE"/>
+    <rect x="224" y="132" width="18" height="50" rx="4" fill="url(#blueGrad)"/>
+    <rect x="250" y="152" width="18" height="30" rx="4" fill="#CCFBF1"/>
+  </g>
+
+  <!-- Card: Orders (top-right) -->
+  <g filter="url(#cardShadow)">
+    <rect x="920" y="70" width="190" height="120" rx="16" fill="#FFFFFF" stroke="#D9E2EC" stroke-width="1.5"/>
+  </g>
+  <text x="944" y="100" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="700" fill="#101828">Orders</text>
+  <text x="944" y="120" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" fill="#2563EB">128</text>
+  <g fill="none" stroke="#16A34A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="950" cy="150" r="8" fill="#DCFCE7" stroke="none"/>
+    <path d="M946 150 l3 3 l6 -6"/>
+  </g>
+  <text x="966" y="154" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#344256">42 fulfilled today</text>
+  <g fill="none" stroke="#D97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="950" cy="174" r="8" fill="#FEF3E2" stroke="none"/>
+    <line x1="950" y1="170" x2="950" y2="175"/>
+    <circle cx="950" cy="178" r="0.6" fill="#D97706"/>
+  </g>
+  <text x="966" y="178" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#344256">6 pending review</text>
+
+  <!-- Card: Shipments (right) -->
+  <g filter="url(#cardShadow)">
+    <rect x="960" y="320" width="180" height="104" rx="16" fill="#FFFFFF" stroke="#D9E2EC" stroke-width="1.5"/>
+  </g>
+  <text x="984" y="350" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="700" fill="#101828">Shipments</text>
+  <g transform="translate(984,362)">
+    <rect x="0" y="8" width="30" height="18" rx="4" fill="url(#blueGradSoft)" stroke="#2563EB" stroke-width="1.2"/>
+    <path d="M30 12 h10 a4 4 0 0 1 4 4 v6 a2 2 0 0 1 -2 2 h-12 z" fill="url(#tealGrad)"/>
+    <circle cx="8" cy="30" r="4" fill="#344256"/>
+    <circle cx="36" cy="30" r="4" fill="#344256"/>
+  </g>
+  <text x="1044" y="382" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#64748B">On the way</text>
+  <text x="984" y="410" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#16A34A" font-weight="700">↑ 18 in transit</text>
+
+  <!-- Card: Warehouse (bottom-left) -->
+  <g filter="url(#cardShadow)">
+    <rect x="70" y="650" width="200" height="100" rx="16" fill="#FFFFFF" stroke="#D9E2EC" stroke-width="1.5"/>
+  </g>
+  <text x="94" y="680" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="700" fill="#101828">Warehouse</text>
+  <g transform="translate(94,690)">
+    <path d="M0 22 L20 6 L40 22 v20 a3 3 0 0 1 -3 3 H3 a3 3 0 0 1 -3 -3 Z" fill="url(#blueGradSoft)" stroke="#2563EB" stroke-width="1.3"/>
+    <rect x="16" y="30" width="8" height="15" fill="#2563EB"/>
+  </g>
+  <text x="146" y="705" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#344256" font-weight="700">Bay 4 — 92% full</text>
+  <text x="146" y="722" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#64748B">3 active locations</text>
+
+  <!-- Card: Products (bottom-center) -->
+  <g filter="url(#cardShadow)">
+    <rect x="470" y="672" width="200" height="98" rx="16" fill="#FFFFFF" stroke="#D9E2EC" stroke-width="1.5"/>
+  </g>
+  <text x="494" y="702" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="700" fill="#101828">Products</text>
+  <g transform="translate(494,712)">
+    <rect x="0" y="0" width="26" height="26" rx="6" fill="url(#tealGrad)"/>
+    <path d="M0 8 L13 2 L26 8" fill="none" stroke="#FFFFFF" stroke-width="1.4"/>
+  </g>
+  <text x="530" y="722" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#344256" font-weight="700">1,204 SKUs</text>
+  <text x="530" y="738" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#64748B">tracked live</text>
+
+  <!-- small connecting node dots at card anchors -->
+  <g fill="#0F766E">
+    <circle cx="290" cy="134" r="4"/>
+    <circle cx="920" cy="130" r="4"/>
+    <circle cx="960" cy="372" r="4"/>
+    <circle cx="270" cy="700" r="4"/>
+    <circle cx="570" cy="720" r="4"/>
+  </g>
+</svg>

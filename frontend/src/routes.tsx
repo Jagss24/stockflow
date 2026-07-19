@@ -5,6 +5,15 @@ const routes = createBrowserRouter([
   {
     path: "/",
     Component: App,
+    children: [
+      {
+        path: "/login",
+        lazy: async () => {
+          const module = await import("@/pages/Login/LoginPage");
+          return { Component: module.default };
+        },
+      },
+    ],
   },
 ]);
 
