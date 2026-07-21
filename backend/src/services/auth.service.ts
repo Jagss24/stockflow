@@ -5,7 +5,7 @@ import {
 } from "../repositories/user.repository.js";
 import { TLoginBody, TRegisterBody } from "../schemas/auth.schema.js";
 import bcrypt from "bcrypt";
-import { signToken } from "../utils/jwt.js";
+import { signAccessToken } from "../tokens/access-token.js";
 import { toSafeUser } from "../mapper/user.mapper.js";
 
 const registerUser = async (body: TRegisterBody) => {
@@ -21,7 +21,7 @@ const registerUser = async (body: TRegisterBody) => {
   const newUser = { ...rest, email, password: hashedPassword };
   const user = await createUser(newUser);
   const safeUser = toSafeUser(user);
-  const token = signToken(safeUser, "3d");
+  const token = signAccessToken({ sub: safeUser.id });
   return { user: safeUser, token };
 };
 
@@ -39,7 +39,7 @@ const loginUser = async (body: TLoginBody) => {
   }
 
   const safeUser = toSafeUser(existingUser);
-  const token = signToken(safeUser, "3d");
+  const token = signAccessToken({ sub: safeUser.id });
   return { user: safeUser, token };
 };
 export { registerUser, loginUser };
