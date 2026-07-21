@@ -2,19 +2,27 @@ import { prisma } from "../lib/prisma.js";
 import { TCreateUserData } from "../types/user.type.js";
 
 const createUser = async (data: TCreateUserData) => {
-  const newUser = await prisma.user.create({
+  const user = await prisma.user.create({
     data: { name: data.name, email: data.email, password: data.password },
   });
 
-  return newUser;
+  return user;
 };
 
 const findUserByEmail = async (email: string) => {
-  const existingUser = await prisma.user.findUnique({
-    where: { email: email },
+  const user = await prisma.user.findUnique({
+    where: { email },
   });
 
-  return existingUser;
+  return user;
 };
 
-export { createUser, findUserByEmail };
+const findUserById = async (id: number) => {
+  const user = await prisma.user.findUnique({
+    where: { id },
+  });
+
+  return user;
+};
+
+export { createUser, findUserByEmail, findUserById };
