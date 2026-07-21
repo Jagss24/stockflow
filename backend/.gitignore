@@ -3,3 +3,4 @@ node_modules
 dist
 generated
 .DS_store
+AGENTS.md
