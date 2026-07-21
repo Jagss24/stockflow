@@ -11,7 +11,7 @@ const PublicRoute = () => {
   }
 
   if (data) {
-    return <Navigate to={ROUTE_PAGES.product} replace />;
+    return <Navigate to={ROUTE_PAGES.dashboard} replace />;
   }
 
   return (

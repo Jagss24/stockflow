@@ -10,7 +10,7 @@ const RootRedirect = () => {
   }
 
   return data ? (
-    <Navigate to={ROUTE_PAGES.product} replace />
+    <Navigate to={ROUTE_PAGES.dashboard} replace />
   ) : (
     <Navigate to={ROUTE_PAGES.login} replace />
   );
