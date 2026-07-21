@@ -1,16 +1,17 @@
 import { api } from "./axios";
 import { createSearchParams } from "react-router";
 
+interface IGetRequestAPIParams {
+  url: string;
+  searchParams?: Record<string, string | number | boolean>;
+  signal?: AbortSignal;
+}
 /* ---------------- GET ---------------- */
 const handleGetRequest = async <TResponse>({
   url,
   searchParams,
   signal,
-}: {
-  url: string;
-  searchParams?: Record<string, string | number | boolean>;
-  signal?: AbortSignal;
-}): Promise<TResponse> => {
+}: IGetRequestAPIParams): Promise<TResponse> => {
   const query = searchParams
     ? `${url}?${createSearchParams(Object.entries(searchParams).reduce((acc, [k, v]) => ({ ...acc, [k]: String(v) }), {}))}`
     : url;
@@ -29,7 +30,6 @@ const handlePostRequest = async <TResponse, TRequest = unknown>({
   url: string;
   payload?: TRequest;
   responseType?: "json" | "blob";
-  headers?: Record<string, string>;
 }): Promise<TResponse> => {
   const response = await api.post(url, payload ?? {}, {
     responseType,
@@ -88,3 +88,5 @@ export {
   handlePatchRequest,
   handleDeleteRequest,
 };
+
+export type { IGetRequestAPIParams };

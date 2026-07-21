@@ -1,4 +1,3 @@
-// src/types/react-query.d.ts
 import "@tanstack/react-query";
 import { AxiosError } from "axios";
 
