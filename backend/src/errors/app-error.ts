@@ -35,6 +35,13 @@ class UnauthorizedError extends AppError {
   }
 }
 
+class NotFoundError extends AppError {
+  constructor(message: string) {
+    super(404, message);
+    this.name = "NotFoundError";
+  }
+}
+
 class CustomError extends AppError {
   constructor(statusCode: number, message: string) {
     super(statusCode, message);
@@ -47,6 +54,7 @@ export {
   ValidationError,
   ConflictError,
   UnauthorizedError,
+  NotFoundError,
   CustomError,
 };
 export type { FieldError };
