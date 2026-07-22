@@ -50,3 +50,21 @@ model Category {
 
   @@map("categories")
 }
+
+model Customer {
+  id                Int      @id @default(autoincrement())
+  businessName      String
+  contactPersonName String
+  email             String?
+  phone             String
+  billingAddress    String
+  shippingAddress   String
+  city              String
+  state             String?
+  gstNumber         String?
+  isActive          Boolean  @default(true)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@map("customers")
+}
