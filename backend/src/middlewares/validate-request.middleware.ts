@@ -32,7 +32,7 @@ const validateParams = (schema: z.ZodType) => {
 
       return next(new ValidationError("Validation failed", errors));
     }
-
+    req.validatedParams = result.data;
     return next();
   };
 };
