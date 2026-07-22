@@ -3,6 +3,7 @@ import {
   TCreateWarehouseBody,
   TUpdateWarehouseBody,
   TWarehouseIdParams,
+  warehouseListQueryConfig,
 } from "../schemas/warehouse.schema.js";
 import {
   createNewWarehouse,
@@ -11,11 +12,21 @@ import {
   getWarehouseById,
   updateExistingWarehouse,
 } from "../services/warehouse.service.js";
+import { parseListQuery } from "../utils/api-query.js";
 import { asyncHandler } from "../utils/async-handler.js";
 
-const getWarehouses = asyncHandler(async (_req, res) => {
-  const warehouses = await getAllWarehouses();
-  return res.status(200).json({ data: warehouses, success: true });
+const getWarehouses = asyncHandler(async (req, res) => {
+  const query = parseListQuery({
+    query: req.query,
+    config: warehouseListQueryConfig,
+  });
+
+  const warehouses = await getAllWarehouses(query);
+  return res.status(200).json({
+    data: warehouses.data,
+    meta: warehouses.meta,
+    success: true,
+  });
 });
 
 const getWarehouse = asyncHandler(async (req, res) => {
@@ -38,8 +49,8 @@ const updateWarehouse = asyncHandler<TUpdateWarehouseBody>(async (req, res) => {
 });
 
 const deleteWarehouse = asyncHandler(async (req, res) => {
-  const warehouse = await deleteExistingWarehouse(Number(req.params.id));
-  return res.status(200).json({ data: warehouse, success: true });
+  await deleteExistingWarehouse(Number(req.params.id));
+  return res.status(204).json({ success: true });
 });
 
 export {

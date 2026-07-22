@@ -11,9 +11,10 @@ import {
   TCreateWarehouseBody,
   TUpdateWarehouseBody,
 } from "../schemas/warehouse.schema.js";
+import { TWarehouseListQuery } from "../types/warehouse.type.js";
 
-const getAllWarehouses = async () => {
-  const warehouses = await findWarehouses();
+const getAllWarehouses = async (query: TWarehouseListQuery) => {
+  const warehouses = await findWarehouses(query);
   return warehouses;
 };
 
@@ -75,8 +76,7 @@ const deleteExistingWarehouse = async (id: number) => {
     throw new NotFoundError("Warehouse not found");
   }
 
-  const deletedWarehouse = await deleteWarehouseById(id);
-  return deletedWarehouse;
+  await deleteWarehouseById(id);
 };
 
 export {

@@ -7,6 +7,7 @@ import { env } from "./config/env.js";
 
 const app = express();
 
+app.set("query parser", "extended");
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({ origin: env.FRONTEND_ORIGIN, credentials: true }));

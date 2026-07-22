@@ -1,4 +1,9 @@
 import { z } from "zod";
+import { TListQueryConfig } from "../types/api-query.type.js";
+import {
+  TWarehouseFilterKey,
+  TWarehouseIncludeKey,
+} from "../types/warehouse.type.js";
 
 const warehouseIdSchema = z.object({
   id: z.coerce
@@ -33,9 +38,22 @@ const updateWarehouseSchema = createWarehouseSchema
     "At least one warehouse field is required",
   );
 
+const warehouseListQueryConfig: TListQueryConfig<
+  TWarehouseFilterKey,
+  TWarehouseIncludeKey
+> = {
+  allowedFilters: ["name", "code", "city", "state", "isActive"],
+  allowedIncludes: [],
+};
+
 type TWarehouseIdParams = z.infer<typeof warehouseIdSchema>;
 type TCreateWarehouseBody = z.infer<typeof createWarehouseSchema>;
 type TUpdateWarehouseBody = z.infer<typeof updateWarehouseSchema>;
 
-export { warehouseIdSchema, createWarehouseSchema, updateWarehouseSchema };
+export {
+  warehouseIdSchema,
+  createWarehouseSchema,
+  updateWarehouseSchema,
+  warehouseListQueryConfig,
+};
 export type { TWarehouseIdParams, TCreateWarehouseBody, TUpdateWarehouseBody };
