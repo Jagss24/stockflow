@@ -1,7 +1,7 @@
-import { TAuthenticatedUser } from "../middlewares/auth-middleware.js";
+import { TSafeUser } from "./user.type.js";
 
 declare module "express" {
   interface Request {
-    user?: TAuthenticatedUser;
+    user?: TSafeUser;
   }
 }
