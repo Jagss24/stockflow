@@ -205,4 +205,22 @@ const createPaginationMeta = ({
   };
 };
 
-export { parseListQuery, createPaginationMeta };
+const parseBooleanQueryFilter = ({
+  value,
+  field,
+}: {
+  value: string;
+  field: string;
+}) => {
+  if (value === "true") return true;
+  if (value === "false") return false;
+
+  throw new ValidationError("Validation failed", [
+    {
+      field,
+      message: `${field} must be true or false`,
+    },
+  ]);
+};
+
+export { parseListQuery, createPaginationMeta, parseBooleanQueryFilter };

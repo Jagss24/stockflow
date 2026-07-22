@@ -1,24 +1,14 @@
 import { prisma } from "../lib/prisma.js";
 import { Prisma } from "../generated/prisma/client.js";
-import { ValidationError } from "../errors/app-error.js";
-import { createPaginationMeta } from "../utils/api-query.js";
+import {
+  createPaginationMeta,
+  parseBooleanQueryFilter,
+} from "../utils/api-query.js";
 import {
   TCreateWarehouseData,
   TUpdateWarehouseData,
   TWarehouseListQuery,
 } from "../types/warehouse.type.js";
-
-const parseBooleanFilter = (value: string) => {
-  if (value === "true") return true;
-  if (value === "false") return false;
-
-  throw new ValidationError("Validation failed", [
-    {
-      field: "filter.isActive",
-      message: "isActive filter must be true or false",
-    },
-  ]);
-};
 
 const findWarehouses = async (query: TWarehouseListQuery) => {
   const { filters, page, limit, search } = query;
@@ -50,7 +40,10 @@ const findWarehouses = async (query: TWarehouseListQuery) => {
   }
 
   if (filters.isActive) {
-    where.isActive = parseBooleanFilter(filters.isActive);
+    where.isActive = parseBooleanQueryFilter({
+      value: filters.isActive,
+      field: "filter.isActive",
+    });
   }
 
   const [warehouses, total] = await prisma.$transaction([
