@@ -2,7 +2,7 @@ import { Button } from "@headlessui/react";
 import { cn } from "@/lib/clsx";
 import { ComponentPropsWithRef, ReactNode } from "react";
 
-type UIButtonVariant = "primary" | "secondary" | "default";
+type UIButtonVariant = "primary" | "secondary" | "default" | "danger";
 
 type UIButtonProps = Omit<ComponentPropsWithRef<"button">, "type"> & {
   variant?: UIButtonVariant;
@@ -20,6 +20,8 @@ const variantClassNames: Record<UIButtonVariant, string> = {
     "border-secondary bg-secondary text-surface shadow-sm hover:border-secondary-hover hover:bg-secondary-hover focus-visible:ring-secondary-soft",
   default:
     "border-border bg-surface text-heading shadow-sm hover:border-border-strong hover:bg-surface-muted focus-visible:ring-primary-soft",
+  danger:
+    "border-transparent bg-surface text-error shadow-none hover:bg-error-soft focus-visible:ring-error-soft",
 };
 
 const UiButton = ({
