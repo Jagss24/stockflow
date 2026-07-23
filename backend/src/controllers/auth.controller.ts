@@ -25,4 +25,8 @@ const login = asyncHandler<TLoginBody>(async (req, res) => {
     .json({ data: user, success: true });
 });
 
-export { register, login };
+const logout = asyncHandler(async (_req, res) => {
+  return res.status(200).clearCookie("accessToken").json({ success: true });
+});
+
+export { register, login, logout };
