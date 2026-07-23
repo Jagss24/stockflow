@@ -1,6 +1,10 @@
 import { API_ENDPOINTS } from "@/constants/api";
 import { handlePostRequest } from "@/lib/httpMethods";
-import { LoginRequest, LoginResponse } from "./auth-api.types";
+import {
+  LoginRequest,
+  LoginResponse,
+  LogoutResponse,
+} from "./auth-api.types";
 
 const loginUserAPI = (payload: LoginRequest) => {
   return handlePostRequest<LoginResponse, LoginRequest>({
@@ -9,4 +13,9 @@ const loginUserAPI = (payload: LoginRequest) => {
   });
 };
 
-export { loginUserAPI };
+const logoutUserAPI = () =>
+  handlePostRequest<LogoutResponse>({
+    url: API_ENDPOINTS.auth.logout,
+  });
+
+export { loginUserAPI, logoutUserAPI };

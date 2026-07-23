@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { loginUserAPI } from "./auth.api";
+import { loginUserAPI, logoutUserAPI } from "./auth.api";
 import { handleNetworkError } from "@/lib/toast";
 
 const useLoginMutation = () => {
@@ -9,4 +9,11 @@ const useLoginMutation = () => {
   });
 };
 
-export { useLoginMutation };
+const useLogoutMutation = () => {
+  return useMutation({
+    mutationFn: logoutUserAPI,
+    onError: handleNetworkError,
+  });
+};
+
+export { useLoginMutation, useLogoutMutation };

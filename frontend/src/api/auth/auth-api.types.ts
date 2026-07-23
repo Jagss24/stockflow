@@ -10,4 +10,13 @@ type LoginResponse = {
   success: boolean;
 };
 
-export type { ICurrentUserResponseSchema, LoginRequest, LoginResponse };
+type LogoutResponse = {
+  success: boolean;
+};
+
+export type {
+  ICurrentUserResponseSchema,
+  LoginRequest,
+  LoginResponse,
+  LogoutResponse,
+};
