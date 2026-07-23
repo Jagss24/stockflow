@@ -10,7 +10,7 @@ const PrivateRoute = () => {
     return <p>Loading...</p>;
   }
 
-  if (!data) {
+  if (!data?.data) {
     return <Navigate to={ROUTE_PAGES.login} replace />;
   }
   return (

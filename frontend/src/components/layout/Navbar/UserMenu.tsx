@@ -27,7 +27,7 @@ const getInitials = (name: string) => {
 };
 
 const UserMenu = () => {
-  const { data: user } = useGetCurrentUserQuery({});
+  const getCurrentUser = useGetCurrentUserQuery({});
   const logoutMutation = useLogoutMutation();
   const navigate = useNavigate();
   const handleLogout = async () => {
@@ -36,6 +36,7 @@ const UserMenu = () => {
     navigate(ROUTE_PAGES.login, { replace: true });
   };
 
+  const user = getCurrentUser?.data?.data;
   const name = user?.name ?? "StockFlow user";
   const role = user ? roleLabels[user.role] : "Workspace member";
 

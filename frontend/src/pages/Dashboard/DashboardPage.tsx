@@ -4,7 +4,8 @@ import { ArrowRight, Tags, Users, Warehouse } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const DashboardPage = () => {
-  const { data: user } = useGetCurrentUserQuery({});
+  const getCurrentUser = useGetCurrentUserQuery({});
+  const user = getCurrentUser?.data?.data;
   const firstName = user?.name.trim().split(/\s+/)[0] ?? "there";
 
   const workspaceAreas = [
