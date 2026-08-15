@@ -18,7 +18,7 @@ const TableSearchbar = ({
 }: TTableSearchBarProps) => {
   const { addSearchParams } = useRouteHandler();
   const handleSearchQuery = (e: React.ChangeEvent<HTMLInputElement>) => {
-    addSearchParams({ "t-search": e.target.value || null });
+    addSearchParams({ "t-search": e.target.value || null, page: 1 });
     setQuery?.(e.target.value);
   };
 

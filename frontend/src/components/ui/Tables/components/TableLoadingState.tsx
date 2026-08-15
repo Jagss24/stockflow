@@ -6,7 +6,10 @@ interface ITableLoadingStateProps {
 
 const TableLoadingState = ({ colSpan }: ITableLoadingStateProps) => {
   return (
-    <TableRow aria-busy="true">
+    <TableRow
+      aria-busy="true"
+      className="bg-surface-strong/70 p-2 rounded-md animate-pulse"
+    >
       <TableCell colSpan={colSpan} className="h-32 text-center">
         <div className="flex items-center justify-center gap-2 text-sm text-text-muted">
           <span

@@ -4,6 +4,7 @@ import {
   tableFeatures,
   useTable,
 } from "@tanstack/react-table";
+import type { IPaginationMeta } from "@/api/api-types";
 import { TableCell, TableRow } from "./components/TableRow";
 import TableSearchbar, {
   TTableSearchBarProps,
@@ -13,6 +14,7 @@ import TableErrorState, {
   ITableErrorStateProps,
 } from "./components/TableErrorState";
 import TableLoadingState from "./components/TableLoadingState";
+import TablePagination from "./components/TablePagination";
 
 const uiTableFeatures = tableFeatures({});
 
@@ -29,6 +31,8 @@ interface IUiTableProps<T extends RowData> {
   isLoading?: boolean;
   isError?: boolean;
   emptyMessage?: string;
+  pagination?: IPaginationMeta;
+  onPageChange?: (page: number) => void;
 }
 const UiTable = <T extends RowData>({
   columns,
@@ -38,6 +42,8 @@ const UiTable = <T extends RowData>({
   errorState,
   isError = false,
   emptyMessage = "No data found.",
+  pagination,
+  onPageChange,
 }: IUiTableProps<T>) => {
   const table = useTable({
     data,
@@ -99,6 +105,9 @@ const UiTable = <T extends RowData>({
         </thead>
         <tbody className="divide-y divide-border">{renderTableBody()}</tbody>
       </table>
+      {pagination && (
+        <TablePagination pagination={pagination} onPageChange={onPageChange} />
+      )}
     </div>
   );
 };
