@@ -1,7 +1,9 @@
 import { getValidatedParams } from "../helpers/validate-params.js";
+import { getValidatedQuery } from "../helpers/validate-query.js";
 import {
   categoryListQueryConfig,
   TCategoryIdParams,
+  TCategoryStatsQuery,
   TCreateCategoryBody,
   TUpdateCategoryBody,
 } from "../schemas/category.schema.js";
@@ -9,6 +11,7 @@ import {
   createNewCategory,
   deleteExistingCategory,
   getAllCategories,
+  getCategoryStats,
   getCategoryById,
   updateExistingCategory,
 } from "../services/category.service.js";
@@ -27,6 +30,13 @@ const getCategories = asyncHandler(async (req, res) => {
     meta: categories.meta,
     success: true,
   });
+});
+
+const getCategoriesStats = asyncHandler(async (req, res) => {
+  const { groupBy } = getValidatedQuery<TCategoryStatsQuery>(req);
+  const stats = await getCategoryStats(groupBy);
+
+  return res.status(200).json({ data: stats, success: true });
 });
 
 const getCategory = asyncHandler(async (req, res) => {
@@ -54,6 +64,7 @@ const deleteCategory = asyncHandler(async (req, res) => {
 
 export {
   getCategories,
+  getCategoriesStats,
   getCategory,
   createCategory,
   updateCategory,

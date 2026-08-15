@@ -10,6 +10,7 @@ type TUpdateCategoryData = Partial<TCreateCategoryData>;
 
 type TCategoryFilterKey = "name" | "description" | "isActive";
 type TCategoryIncludeKey = never;
+type TCategoryStatsGroupBy = "isActive";
 type TCategoryListQuery = TParsedListQuery<
   TCategoryFilterKey,
   TCategoryIncludeKey
@@ -21,5 +22,6 @@ export type {
   TUpdateCategoryData,
   TCategoryFilterKey,
   TCategoryIncludeKey,
+  TCategoryStatsGroupBy,
   TCategoryListQuery,
 };

@@ -3,15 +3,18 @@ import {
   createCategory,
   deleteCategory,
   getCategories,
+  getCategoriesStats,
   getCategory,
   updateCategory,
 } from "../controllers/category.controller.js";
 import {
   validateParams,
+  validateQuery,
   validateRequest,
 } from "../middlewares/validate-request.middleware.js";
 import {
   categoryIdSchema,
+  categoryStatsQuerySchema,
   createCategorySchema,
   updateCategorySchema,
 } from "../schemas/category.schema.js";
@@ -19,6 +22,11 @@ import {
 const categoryRouter = Router();
 
 categoryRouter.get("/", getCategories);
+categoryRouter.get(
+  "/stats",
+  validateQuery(categoryStatsQuerySchema),
+  getCategoriesStats,
+);
 categoryRouter.get("/:id", validateParams(categoryIdSchema), getCategory);
 categoryRouter.post("/", validateRequest(createCategorySchema), createCategory);
 categoryRouter.patch(

@@ -4,6 +4,7 @@ import {
   TCategoryFilterKey,
   TCategoryIncludeKey,
 } from "../types/category.type.js";
+import { createStatsQuerySchema } from "./stats.schema.js";
 
 const categoryIdSchema = z.object({
   id: z.coerce
@@ -40,14 +41,23 @@ const categoryListQueryConfig: TListQueryConfig<
   allowedIncludes: [],
 };
 
+const categoryStatsQuerySchema = createStatsQuerySchema(["isActive"]);
+
 type TCategoryIdParams = z.infer<typeof categoryIdSchema>;
 type TCreateCategoryBody = z.infer<typeof createCategorySchema>;
 type TUpdateCategoryBody = z.infer<typeof updateCategorySchema>;
+type TCategoryStatsQuery = z.infer<typeof categoryStatsQuerySchema>;
 
 export {
   categoryIdSchema,
   createCategorySchema,
   updateCategorySchema,
+  categoryStatsQuerySchema,
   categoryListQueryConfig,
 };
-export type { TCategoryIdParams, TCreateCategoryBody, TUpdateCategoryBody };
+export type {
+  TCategoryIdParams,
+  TCreateCategoryBody,
+  TUpdateCategoryBody,
+  TCategoryStatsQuery,
+};

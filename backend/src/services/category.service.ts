@@ -3,6 +3,7 @@ import {
   createCategory,
   deleteCategoryById,
   findCategories,
+  findCategoryStats,
   findCategoryById,
   findCategoryByName,
   updateCategoryById,
@@ -11,11 +12,26 @@ import {
   TCreateCategoryBody,
   TUpdateCategoryBody,
 } from "../schemas/category.schema.js";
-import { TCategoryListQuery } from "../types/category.type.js";
+import {
+  TCategoryListQuery,
+  TCategoryStatsGroupBy,
+} from "../types/category.type.js";
+import { createGroupedStats } from "../utils/grouped-stats.js";
 
 const getAllCategories = async (query: TCategoryListQuery) => {
   const categories = await findCategories(query);
   return categories;
+};
+
+const getCategoryStats = async (groupBy: TCategoryStatsGroupBy) => {
+  const groups = await findCategoryStats(groupBy);
+
+  return createGroupedStats({
+    resource: "categories",
+    groupBy,
+    groups,
+    expectedValues: [true, false],
+  });
 };
 
 const getCategoryById = async (id: number) => {
@@ -78,6 +94,7 @@ const deleteExistingCategory = async (id: number) => {
 
 export {
   getAllCategories,
+  getCategoryStats,
   getCategoryById,
   createNewCategory,
   updateExistingCategory,

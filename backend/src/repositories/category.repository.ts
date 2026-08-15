@@ -6,6 +6,7 @@ import {
 } from "../utils/api-query.js";
 import {
   TCategoryListQuery,
+  TCategoryStatsGroupBy,
   TCreateCategoryData,
   TUpdateCategoryData,
 } from "../types/category.type.js";
@@ -55,6 +56,17 @@ const findCategories = async (query: TCategoryListQuery) => {
   };
 };
 
+const findCategoryStats = async (groupBy: TCategoryStatsGroupBy) => {
+  const groups = await prisma.category.groupBy({
+    by: [groupBy],
+    _count: { _all: true },
+  });
+
+  return groups.map((group) => {
+    return { value: group.isActive, count: group._count._all };
+  });
+};
+
 const findCategoryById = async (id: number) => {
   const category = await prisma.category.findUnique({
     where: { id },
@@ -98,6 +110,7 @@ const deleteCategoryById = async (id: number) => {
 
 export {
   findCategories,
+  findCategoryStats,
   findCategoryById,
   findCategoryByName,
   createCategory,
