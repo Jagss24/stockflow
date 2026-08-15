@@ -2,7 +2,12 @@ import { Button } from "@headlessui/react";
 import { cn } from "@/lib/clsx";
 import { ComponentPropsWithRef, ReactNode } from "react";
 
-type UIButtonVariant = "primary" | "secondary" | "default" | "danger";
+type UIButtonVariant =
+  | "primary"
+  | "secondary"
+  | "default"
+  | "danger"
+  | "destructive";
 
 type UIButtonProps = Omit<ComponentPropsWithRef<"button">, "type"> & {
   variant?: UIButtonVariant;
@@ -15,13 +20,15 @@ type UIButtonProps = Omit<ComponentPropsWithRef<"button">, "type"> & {
 
 const variantClassNames: Record<UIButtonVariant, string> = {
   primary:
-    "border-primary bg-primary text-surface shadow-sm hover:border-primary-hover hover:bg-primary-hover focus-visible:ring-primary-soft",
+    "border-primary bg-primary text-surface hover:border-primary-hover hover:bg-primary-hover focus-visible:ring-primary-soft",
   secondary:
-    "border-secondary bg-secondary text-surface shadow-sm hover:border-secondary-hover hover:bg-secondary-hover focus-visible:ring-secondary-soft",
+    "border-secondary bg-secondary text-surface hover:border-secondary-hover hover:bg-secondary-hover focus-visible:ring-secondary-soft",
   default:
-    "border-border bg-surface text-heading shadow-sm hover:border-border-strong hover:bg-surface-muted focus-visible:ring-primary-soft",
+    "border-border bg-surface text-heading hover:border-border-strong hover:bg-surface-muted focus-visible:ring-primary-soft",
   danger:
-    "border-transparent bg-surface text-error shadow-none hover:bg-error-soft focus-visible:ring-error-soft",
+    "border-transparent bg-surface text-error hover:bg-error-soft focus-visible:ring-error-soft",
+  destructive:
+    "border-error bg-error text-surface hover:border-red hover:bg-red focus-visible:ring-error-soft",
 };
 
 const UiButton = ({
