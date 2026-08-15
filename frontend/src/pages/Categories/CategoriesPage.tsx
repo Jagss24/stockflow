@@ -1,5 +1,6 @@
 import type { ICategoryResponseSchema } from "@/api/categories/category-api.types";
 import UiButton from "@/components/ui/Buttons/UiButton";
+import UiConfirmationModal from "@/components/ui/Modal/UiConfirmationModal";
 import UiTable, {
   type TModifiedColumnDef,
 } from "@/components/ui/Tables/UiTable";
@@ -14,23 +15,23 @@ import {
   Tags,
   Trash2,
 } from "lucide-react";
+import AddEditCategories from "./components/AddEditCategories";
 import CategoryStatusBadge from "./components/CategoryStatusBadge";
 import CategorySummaryCard from "./components/CategorySummaryCard";
 import { useCategories } from "./hooks/useCategories";
 
 const CategoriesPage = () => {
-  const { getCategoryQuery, categoryStatsQuery, tableSearch } = useCategories();
-
-  const categories = getCategoryQuery.data?.data ?? [];
-  const visibleCategoriesTotal = getCategoryQuery.data?.meta.total;
-  const categoryStats = categoryStatsQuery.data?.data;
-  const activeCategories = categoryStats?.groups.find(
-    (group) => group.value === true,
-  )?.count;
-  const inactiveCategories = categoryStats?.groups.find(
-    (group) => group.value === false,
-  )?.count;
-  const totalCategories = categoryStats?.total;
+  const {
+    categories,
+    pagination,
+    tableSearch,
+    isLoading,
+    isError,
+    visibleCategoriesTotal,
+    stats,
+    formModal,
+    deleteModal,
+  } = useCategories();
 
   const columns: TModifiedColumnDef<ICategoryResponseSchema>[] = [
     {
@@ -94,6 +95,7 @@ const CategoriesPage = () => {
             type="button"
             aria-label={`Edit ${row.original.name}`}
             className="flex size-9 items-center justify-center rounded-lg text-text-muted transition hover:bg-primary-soft hover:text-primary"
+            onClick={() => formModal.openEdit(row.original)}
           >
             <Pencil className="size-4" aria-hidden="true" />
           </button>
@@ -101,6 +103,7 @@ const CategoriesPage = () => {
             type="button"
             aria-label={`Delete ${row.original.name}`}
             className="flex size-9 items-center justify-center rounded-lg text-text-muted transition hover:bg-error-soft hover:text-error"
+            onClick={() => deleteModal.open(row.original)}
           >
             <Trash2 className="size-4" aria-hidden="true" />
           </button>
@@ -110,9 +113,9 @@ const CategoriesPage = () => {
   ];
 
   const summaryCardInfo = [
-    { label: "Total categories", value: totalCategories, icon: Tags },
-    { label: "Active", value: activeCategories, icon: CircleCheck },
-    { label: "Inactive ", value: inactiveCategories, icon: ArchiveX },
+    { label: "Total categories", value: stats.total, icon: Tags },
+    { label: "Active", value: stats.active, icon: CircleCheck },
+    { label: "Inactive ", value: stats.inactive, icon: ArchiveX },
   ];
 
   return (
@@ -126,7 +129,11 @@ const CategoriesPage = () => {
             {categories.length} of {visibleCategoriesTotal ?? 0} categories
           </p>
         </div>
-        <UiButton variant="primary" leftIcon={<Plus className="size-5" />}>
+        <UiButton
+          variant="primary"
+          leftIcon={<Plus className="size-5" />}
+          onClick={formModal.openAdd}
+        >
           Add category
         </UiButton>
       </header>
@@ -145,15 +152,39 @@ const CategoriesPage = () => {
       <UiTable
         data={categories}
         columns={columns}
-        isLoading={getCategoryQuery.isLoading}
-        isError={getCategoryQuery.isError}
-        pagination={getCategoryQuery.data?.meta}
+        isLoading={isLoading}
+        isError={isError}
+        pagination={pagination}
         emptyMessage="No categories found."
         searchBarProps={{
           placeholder: "Search categories by name, descirption...",
           query: tableSearch,
           "aria-label": "Search categories",
         }}
+      />
+
+      <AddEditCategories
+        isOpen={formModal.isOpen}
+        category={formModal.category}
+        onClose={formModal.close}
+      />
+
+      <UiConfirmationModal
+        isOpen={Boolean(deleteModal.category)}
+        title="Delete category?"
+        description={
+          <>
+            This will permanently remove{" "}
+            <strong className="font-semibold text-heading">
+              {deleteModal.category?.name}
+            </strong>
+            . This action cannot be undone.
+          </>
+        }
+        confirmLabel="Delete"
+        isLoading={deleteModal.isDeleting}
+        onCancel={deleteModal.close}
+        onConfirm={deleteModal.confirm}
       />
     </section>
   );
