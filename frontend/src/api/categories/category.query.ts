@@ -1,7 +1,10 @@
 import { QUERY_KEYS } from "@/constants/queryKeys";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
-import type { ICategoryFiltersSchema } from "./category-api.types";
-import { getCategoriesApi } from "./category.api";
+import type {
+  ICategoryFiltersSchema,
+  TCategoryStatsGroupBy,
+} from "./category-api.types";
+import { getCategoriesApi, getCategoryStatsApi } from "./category.api";
 
 interface ICategoriesQueryParams {
   page?: number;
@@ -12,7 +15,7 @@ interface ICategoriesQueryParams {
 
 const useCategoriesQuery = ({
   page = 1,
-  limit = 2,
+  limit = 15,
   filters,
   search = "",
 }: ICategoriesQueryParams) => {
@@ -33,4 +36,14 @@ const useCategoriesQuery = ({
   });
 };
 
-export { useCategoriesQuery };
+const useCategoryStatsQuery = <TGroupBy extends TCategoryStatsGroupBy>(
+  groupBy: TGroupBy,
+) => {
+  return useQuery({
+    queryKey: [...QUERY_KEYS.categories, groupBy],
+    queryFn: ({ signal }) => getCategoryStatsApi({ groupBy, signal }),
+    staleTime: 30_000,
+  });
+};
+
+export { useCategoriesQuery, useCategoryStatsQuery };

@@ -8,6 +8,7 @@ export const API_ENDPOINTS = {
   },
   categories: {
     list: "/categories",
+    stats: "/categories/stats",
     single: (id: string) => `/categories/${id}`,
   },
 } as const;

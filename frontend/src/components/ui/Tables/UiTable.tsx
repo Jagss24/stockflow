@@ -4,7 +4,7 @@ import {
   tableFeatures,
   useTable,
 } from "@tanstack/react-table";
-import type { IPaginationMeta } from "@/api/api-types";
+import { IPaginationMeta } from "@/api/api-types";
 import { TableCell, TableRow } from "./components/TableRow";
 import TableSearchbar, {
   TTableSearchBarProps,
@@ -79,7 +79,10 @@ const UiTable = <T extends RowData>({
   };
 
   return (
-    <div role="region" className="w-full border border-border rounded-xl">
+    <div
+      role="region"
+      className="w-full overflow-hidden rounded-xl border border-border bg-surface shadow-card"
+    >
       <div className="p-3 border-b border-border">
         <TableSearchbar {...searchBarProps} />
       </div>

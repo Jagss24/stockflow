@@ -1,7 +1,11 @@
 import { API_ENDPOINTS } from "@/constants/api";
 import { handleGetRequest, IGetRequestAPIParams } from "@/lib/httpMethods";
 import { IApiResponse, IPaginatedResponse } from "../api-types";
-import { ICategoryResponseSchema } from "./category-api.types";
+import {
+  ICategoryResponseSchema,
+  TCategoryStatsResponse,
+  TCategoryStatsGroupBy,
+} from "./category-api.types";
 
 const getCategoriesApi = ({
   params,
@@ -31,4 +35,17 @@ const getCategoryApi = ({
     signal,
   });
 
-export { getCategoriesApi, getCategoryApi };
+const getCategoryStatsApi = <TGroupBy extends TCategoryStatsGroupBy>({
+  groupBy,
+  signal,
+}: {
+  groupBy: TGroupBy;
+  signal?: AbortSignal;
+}) =>
+  handleGetRequest<TCategoryStatsResponse<TGroupBy>>({
+    url: API_ENDPOINTS.categories.stats,
+    searchParams: { groupBy },
+    signal,
+  });
+
+export { getCategoriesApi, getCategoryApi, getCategoryStatsApi };

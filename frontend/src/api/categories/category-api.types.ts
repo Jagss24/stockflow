@@ -1,4 +1,8 @@
-import type { IPaginatedResponse } from "../api-types";
+import type {
+  IApiResponse,
+  IGroupedStats,
+  IPaginatedResponse,
+} from "../api-types";
 
 type ICategoryResponseSchema = {
   id: number;
@@ -12,6 +16,20 @@ type ICategoryResponseSchema = {
 
 type ICategoryListResponse = IPaginatedResponse<ICategoryResponseSchema>;
 
+type TCategoryStatsValueMap = {
+  isActive: boolean;
+};
+type TCategoryStatsGroupBy = keyof TCategoryStatsValueMap;
+
+type TCategoryStatsResponse<TGroupBy extends TCategoryStatsGroupBy> =
+  IApiResponse<
+    IGroupedStats<
+      "categories",
+      TCategoryStatsGroupBy,
+      TCategoryStatsValueMap[TGroupBy]
+    >
+  >;
+
 interface ICategoryFiltersSchema {
   name: string;
   description: string;
@@ -21,5 +39,7 @@ interface ICategoryFiltersSchema {
 export type {
   ICategoryResponseSchema,
   ICategoryListResponse,
+  TCategoryStatsResponse,
   ICategoryFiltersSchema,
+  TCategoryStatsGroupBy,
 };
