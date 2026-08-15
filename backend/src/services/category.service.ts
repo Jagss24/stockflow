@@ -48,7 +48,9 @@ const createNewCategory = async (body: TCreateCategoryBody) => {
   const existingCategory = await findCategoryByName(body.name);
 
   if (existingCategory) {
-    throw new ConflictError("Category name already exists");
+    throw new ConflictError("Category name already exists", [
+      { field: "name", message: "Category name already exists" },
+    ]);
   }
 
   const category = await createCategory({

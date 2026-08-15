@@ -22,8 +22,8 @@ class ValidationError extends AppError {
 }
 
 class ConflictError extends AppError {
-  constructor(message: string) {
-    super(409, message);
+  constructor(message: string, errors?: FieldError[]) {
+    super(409, message, errors);
     this.name = "ConflictError";
   }
 }
