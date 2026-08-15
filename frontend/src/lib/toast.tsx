@@ -1,6 +1,6 @@
 import UiToast from "@/components/ui/Toast/UiToast";
 import { ApiErrorResponse } from "@/types/react-query";
-import { AxiosError } from "axios";
+import { isAxiosError } from "axios";
 import { CheckCircle, TriangleAlertIcon } from "lucide-react";
 import { toast } from "sonner";
 
@@ -19,9 +19,10 @@ function handleSuccessToast({ message }: { message: string }) {
   });
 }
 
-function handleNetworkError(error: AxiosError<ApiErrorResponse>) {
-  const message =
-    error?.response?.data.message || "Something went wrong! Please try again.";
+function handleNetworkError(error: unknown) {
+  const message = isAxiosError<ApiErrorResponse>(error)
+    ? error.response?.data.message || "Something went wrong! Please try again."
+    : "Something went wrong! Please try again.";
 
   handleErrorToast({ message });
 }
