@@ -16,6 +16,12 @@ type ICategoryResponseSchema = {
 
 type ICategoryListResponse = IPaginatedResponse<ICategoryResponseSchema>;
 
+type TCategoryMutationPayload = {
+  name: string;
+  description?: string;
+  isActive: boolean;
+};
+
 type TCategoryStatsValueMap = {
   isActive: boolean;
 };
@@ -39,6 +45,7 @@ interface ICategoryFiltersSchema {
 export type {
   ICategoryResponseSchema,
   ICategoryListResponse,
+  TCategoryMutationPayload,
   TCategoryStatsResponse,
   ICategoryFiltersSchema,
   TCategoryStatsGroupBy,

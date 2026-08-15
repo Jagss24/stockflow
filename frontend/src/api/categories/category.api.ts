@@ -1,8 +1,15 @@
 import { API_ENDPOINTS } from "@/constants/api";
-import { handleGetRequest, IGetRequestAPIParams } from "@/lib/httpMethods";
+import {
+  handleDeleteRequest,
+  handleGetRequest,
+  handlePatchRequest,
+  handlePostRequest,
+  IGetRequestAPIParams,
+} from "@/lib/httpMethods";
 import { IApiResponse, IPaginatedResponse } from "../api-types";
 import {
   ICategoryResponseSchema,
+  TCategoryMutationPayload,
   TCategoryStatsResponse,
   TCategoryStatsGroupBy,
 } from "./category-api.types";
@@ -48,4 +55,34 @@ const getCategoryStatsApi = <TGroupBy extends TCategoryStatsGroupBy>({
     signal,
   });
 
-export { getCategoriesApi, getCategoryApi, getCategoryStatsApi };
+const createCategoryApi = (payload: TCategoryMutationPayload) =>
+  handlePostRequest<IApiResponse<ICategoryResponseSchema>>({
+    url: API_ENDPOINTS.categories.list,
+    payload,
+  });
+
+const updateCategoryApi = ({
+  id,
+  payload,
+}: {
+  id: number;
+  payload: Partial<TCategoryMutationPayload>;
+}) =>
+  handlePatchRequest<IApiResponse<ICategoryResponseSchema>>({
+    url: API_ENDPOINTS.categories.single(String(id)),
+    payload,
+  });
+
+const deleteCategoryApi = (id: number) =>
+  handleDeleteRequest<void>({
+    url: API_ENDPOINTS.categories.single(String(id)),
+  });
+
+export {
+  getCategoriesApi,
+  getCategoryApi,
+  getCategoryStatsApi,
+  createCategoryApi,
+  updateCategoryApi,
+  deleteCategoryApi,
+};
