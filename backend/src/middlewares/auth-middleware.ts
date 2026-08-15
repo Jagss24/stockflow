@@ -6,13 +6,16 @@ import { toSafeUser } from "../mapper/user.mapper.js";
 
 const authMiddleware = asyncHandler(async (req, _res, next) => {
   const token = req.cookies?.accessToken;
-  if (!token) throw new UnauthorizedError("No token found");
+
+  if (!token) {
+    throw new UnauthorizedError("Authentication required");
+  }
 
   const decoded = verifyAccessToken(token);
   const user = await findUserById(decoded.sub);
 
   if (!user) {
-    throw new UnauthorizedError("Invalid token");
+    throw new UnauthorizedError("Invalid access token");
   }
 
   req.user = toSafeUser(user);

@@ -1,4 +1,5 @@
-import { JwtPayload } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
+import type { JwtPayload } from "jsonwebtoken";
 import { UnauthorizedError } from "../errors/app-error.js";
 import { signJwt, verifyJwt } from "../lib/jwt.js";
 
@@ -20,10 +21,7 @@ const isAccessTokenPayload = (
 
   const tokenPayload = payload as Record<string, unknown>;
 
-  return (
-    tokenPayload.type === "access" &&
-    typeof tokenPayload.sub === "number"
-  );
+  return tokenPayload.type === "access" && typeof tokenPayload.sub === "number";
 };
 
 const signAccessToken = (payload: TSignAccessTokenPayload) => {
@@ -31,13 +29,25 @@ const signAccessToken = (payload: TSignAccessTokenPayload) => {
 };
 
 const verifyAccessToken = (token: string) => {
-  const payload = verifyJwt(token);
+  try {
+    const payload = verifyJwt(token);
 
-  if (!isAccessTokenPayload(payload)) {
-    throw new UnauthorizedError("Invalid token");
+    if (!isAccessTokenPayload(payload)) {
+      throw new UnauthorizedError("Invalid access token");
+    }
+
+    return payload;
+  } catch (error) {
+    if (error instanceof UnauthorizedError) {
+      throw error;
+    }
+
+    if (error instanceof jwt.JsonWebTokenError) {
+      throw new UnauthorizedError("Invalid or expired access token");
+    }
+
+    throw error;
   }
-
-  return payload;
 };
 
 export { signAccessToken, verifyAccessToken };
