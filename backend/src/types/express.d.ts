@@ -4,5 +4,6 @@ declare module "express" {
   interface Request {
     user?: TSafeUser;
     validatedParams?: unknown;
+    validatedQuery?: unknown;
   }
 }
