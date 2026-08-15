@@ -1,9 +1,9 @@
 import { useLoginMutation } from "@/api/auth/auth.mutations";
 import { LoginRequest } from "@/api/auth/auth-api.types";
+import { ROUTE_PAGES } from "@/constants/pages";
+import { useRouteHandler } from "@/hooks/useRouteHandler";
 import { setApiFormErrors } from "@/lib/formErrors";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import { ROUTE_PAGES } from "@/constants/pages";
 
 const useLoginForm = () => {
   const form = useForm<LoginRequest>({
@@ -15,13 +15,13 @@ const useLoginForm = () => {
   });
 
   const loginMutation = useLoginMutation();
-  const navigate = useNavigate();
+  const { navigateTo } = useRouteHandler();
 
   const onSubmit: SubmitHandler<LoginRequest> = async (values) => {
     loginMutation
       .mutateAsync(values)
       .then(() => {
-        navigate(ROUTE_PAGES.dashboard);
+        navigateTo(ROUTE_PAGES.dashboard);
       })
       .catch((err) => {
         setApiFormErrors(err, form.setError);

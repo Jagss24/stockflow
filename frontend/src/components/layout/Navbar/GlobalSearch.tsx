@@ -1,7 +1,7 @@
 import UiInput from "@/components/ui/Input/UiInput";
+import { useRouteHandler } from "@/hooks/useRouteHandler";
 import { Search } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { navigationItems } from "../navigation";
 
 const GlobalSearch = () => {
@@ -9,7 +9,7 @@ const GlobalSearch = () => {
   const [open, setOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const navigate = useNavigate();
+  const { navigateTo } = useRouteHandler();
 
   const results = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
@@ -51,7 +51,7 @@ const GlobalSearch = () => {
   }, []);
 
   const selectResult = (path: string) => {
-    navigate(path);
+    navigateTo(path);
     setQuery("");
     setOpen(false);
     inputRef.current?.blur();
@@ -105,7 +105,7 @@ const GlobalSearch = () => {
                   <button
                     key={item.path}
                     type="button"
-                    className="flex w-full items-center gap-3 rounded-lg px-3 py-3 text-left transition hover:bg-primary-soft focus:bg-primary-soft focus:outline-none"
+                    className="flex w-full items-center gap-3 rounded-lg px-3 py-3 text-left text-xs transition hover:bg-primary-soft focus:bg-primary-soft focus:outline-none"
                     onClick={() => selectResult(item.path)}
                   >
                     <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-surface-muted text-text-muted">
@@ -115,7 +115,7 @@ const GlobalSearch = () => {
                       <span className="block font-semibold text-heading">
                         {item.label}
                       </span>
-                      <span className="block truncate text-sm text-text-muted">
+                      <span className="block truncate text-text-muted">
                         {item.description}
                       </span>
                     </span>

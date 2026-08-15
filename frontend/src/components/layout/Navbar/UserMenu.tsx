@@ -1,10 +1,10 @@
 import { useLogoutMutation } from "@/api/auth/auth.mutations";
 import { useGetCurrentUserQuery } from "@/api/user/user.query";
 import { ROUTE_PAGES } from "@/constants/pages";
+import { useRouteHandler } from "@/hooks/useRouteHandler";
 import queryClient from "@/lib/queryClient";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { ChevronDown, LogOut } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 import UiButton from "@/components/ui/Buttons/UiButton";
 
 const roleLabels = {
@@ -29,11 +29,11 @@ const getInitials = (name: string) => {
 const UserMenu = () => {
   const getCurrentUser = useGetCurrentUserQuery({});
   const logoutMutation = useLogoutMutation();
-  const navigate = useNavigate();
+  const { navigateTo } = useRouteHandler();
   const handleLogout = async () => {
     await logoutMutation.mutateAsync();
     queryClient.clear();
-    navigate(ROUTE_PAGES.login, { replace: true });
+    navigateTo(ROUTE_PAGES.login, { replace: true });
   };
 
   const user = getCurrentUser?.data?.data;

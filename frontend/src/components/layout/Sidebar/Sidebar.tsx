@@ -15,13 +15,13 @@ const Sidebar = ({ collapsed, onToggleCollapsed }: SidebarProps) => {
       <aside
         id="app-sidebar"
         className={cn(
-          "peer fixed inset-y-0 left-0 z-50 flex w-60 -translate-x-full flex-col border-r border-border bg-surface transition-[width,transform] duration-200 target:translate-x-0 lg:translate-x-0",
+          "fixed inset-y-0 left-0 z-50 flex w-56 -translate-x-full flex-col border-r border-border bg-surface transition-[width,transform] duration-200 target:translate-x-0 lg:translate-x-0",
           collapsed ? "lg:w-16" : "lg:w-60",
         )}
       >
         <div
           className={cn(
-            "relative flex h-20 shrink-0 items-center gap-3 border-b border-border px-5",
+            "relative flex h-16 shrink-0 items-center gap-3 border-b border-border px-5",
             collapsed && "lg:justify-center lg:px-8",
           )}
         >
@@ -29,7 +29,7 @@ const Sidebar = ({ collapsed, onToggleCollapsed }: SidebarProps) => {
             <Boxes className="size-5" aria-hidden="true" />
           </div>
           <div className={cn("min-w-0", collapsed && "lg:hidden")}>
-            <p className="truncate text-lg font-bold tracking-tight text-heading">
+            <p className="truncate text-base font-bold tracking-tight text-heading">
               StockFlow
             </p>
             <p className="truncate text-xs font-medium text-text-soft">
@@ -62,7 +62,7 @@ const Sidebar = ({ collapsed, onToggleCollapsed }: SidebarProps) => {
             <div key={group.label} className="mb-5 last:mb-0">
               <p
                 className={cn(
-                  "mb-2 px-3 text-xs font-bold uppercase tracking-[0.12em] text-text-soft",
+                  "mb-2 px-3 text-xs font-bold uppercase tracking-wider text-text-soft",
                   collapsed && "lg:sr-only",
                 )}
               >
@@ -78,7 +78,7 @@ const Sidebar = ({ collapsed, onToggleCollapsed }: SidebarProps) => {
                       title={collapsed ? item.label : undefined}
                       className={({ isActive }) =>
                         cn(
-                          "relative flex h-10 items-center gap-3 rounded-lg px-3 text-sm font-semibold text-text-muted transition-colors",
+                          "relative flex h-10 items-center gap-3 rounded-lg px-3 text-xs font-semibold text-text-muted transition-colors",
                           "hover:bg-surface-muted hover:text-heading",
                           collapsed && "lg:justify-center lg:px-2",
                           isActive &&

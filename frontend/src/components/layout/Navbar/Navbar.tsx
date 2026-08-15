@@ -1,18 +1,18 @@
 import { Menu as MenuIcon } from "lucide-react";
-import { useLocation } from "react-router-dom";
 import type { TRoutePath } from "@/constants/pages";
+import { useRouteHandler } from "@/hooks/useRouteHandler";
 import { routeMeta } from "../navigation";
 import GlobalSearch from "./GlobalSearch";
 import UserMenu from "./UserMenu";
 
 const Navbar = () => {
-  const { pathname } = useLocation();
+  const { pathname } = useRouteHandler();
   const currentRoute = routeMeta[pathname as TRoutePath] ?? {
     title: "StockFlow",
   };
 
   return (
-    <header className="sticky top-0 z-30 flex h-20 items-center gap-3 border-b border-border bg-surface/95 px-4 backdrop-blur sm:px-5 lg:px-6">
+    <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b border-border bg-surface/95 px-4 backdrop-blur sm:px-5 lg:px-6">
       <a
         href="#app-sidebar"
         aria-label="Open navigation"
@@ -23,7 +23,7 @@ const Navbar = () => {
       </a>
 
       <div className="hidden min-w-44 lg:block">
-        <div className="flex items-center gap-2 text-sm font-medium text-text-soft">
+        <div className="flex items-center gap-2 font-medium text-text-soft text-xs">
           <span>Home</span>
           <span aria-hidden="true">{">"}</span>
           <span className="text-text-muted">{currentRoute.title}</span>

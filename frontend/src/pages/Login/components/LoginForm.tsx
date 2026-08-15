@@ -40,7 +40,7 @@ const LoginForm = ({ form, isSubmitting, onSubmit }: LoginFormProps) => {
             leftIcon={<Mail className="size-4" />}
             error={error?.message}
             disabled={isSubmitting}
-            inputClassName="h-14 rounded-lg bg-surface-muted px-4 text-base font-medium placeholder:text-text-muted"
+            inputClassName="h-14 rounded-lg bg-surface-muted text-base font-medium placeholder:text-text-muted"
           />
         )}
       />
@@ -66,7 +66,7 @@ const LoginForm = ({ form, isSubmitting, onSubmit }: LoginFormProps) => {
             leftIcon={<LockKeyhole className="size-4" />}
             error={error?.message}
             disabled={isSubmitting}
-            inputClassName="h-14 rounded-lg bg-surface-muted px-4 text-base font-medium placeholder:text-text-muted"
+            inputClassName="h-14 rounded-lg bg-surface-muted text-base font-medium placeholder:text-text-muted"
           />
         )}
       />
