@@ -6,4 +6,8 @@ export const API_ENDPOINTS = {
   user: {
     me: "/user/me",
   },
+  categories: {
+    list: "/categories",
+    single: (id: string) => `/categories/${id}`,
+  },
 } as const;
