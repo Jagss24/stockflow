@@ -5,7 +5,7 @@ import {
   useCategoryStatsQuery,
 } from "@/api/categories/category.query";
 import { useRouteHandler } from "@/hooks/useRouteHandler";
-import { handleNetworkError, handleSuccessToast } from "@/lib/toast";
+import { handleSuccessToast } from "@/lib/toast";
 import { useState } from "react";
 
 interface ICategoryFormModalState {
@@ -16,8 +16,9 @@ interface ICategoryFormModalState {
 const useCategories = () => {
   const { getSearchParam } = useRouteHandler();
   const deleteCategoryMutation = useDeleteCategoryMutation();
-  const [formModalState, setFormModalState] =
-    useState<ICategoryFormModalState>({ isOpen: false });
+  const [formModalState, setFormModalState] = useState<ICategoryFormModalState>(
+    { isOpen: false },
+  );
   const [categoryToDelete, setCategoryToDelete] =
     useState<ICategoryResponseSchema>();
 
@@ -64,22 +65,21 @@ const useCategories = () => {
   const confirmDeleteCategory = async () => {
     if (!categoryToDelete) return;
 
-    try {
-      await deleteCategoryMutation.mutateAsync(categoryToDelete.id);
-      handleSuccessToast({ message: "Category deleted successfully." });
-      setCategoryToDelete(undefined);
-    } catch (error) {
-      handleNetworkError(error);
-    }
+    await deleteCategoryMutation.mutateAsync(categoryToDelete.id);
+    handleSuccessToast({ message: "Category deleted successfully." });
+    setCategoryToDelete(undefined);
   };
 
   return {
-    categories,
-    pagination: categoryQuery.data?.meta,
     tableSearch,
-    isLoading: categoryQuery.isLoading,
-    isError: categoryQuery.isError,
-    visibleCategoriesTotal: categoryQuery.data?.meta.total,
+    categoryQuery: {
+      categories,
+      pagination: categoryQuery.data?.meta,
+      isLoading: categoryQuery.isLoading,
+      isError: categoryQuery.isError,
+      onRefetch: categoryQuery.refetch,
+      isRefetching: categoryQuery.isRefetching,
+    },
     stats: {
       total: categoryStats?.total,
       active: activeCategories,

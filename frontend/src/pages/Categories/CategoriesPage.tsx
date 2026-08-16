@@ -16,22 +16,14 @@ import {
   Trash2,
 } from "lucide-react";
 import AddEditCategories from "./components/AddEditCategories";
-import CategoryStatusBadge from "./components/CategoryStatusBadge";
-import CategorySummaryCard from "./components/CategorySummaryCard";
 import { useCategories } from "./hooks/useCategories";
+import UiBadge from "@/components/ui/Badge/UiBadge";
+import { cn } from "@/lib/clsx";
+import UiSummaryCard from "@/components/ui/Card/UiSummaryCard";
 
 const CategoriesPage = () => {
-  const {
-    categories,
-    pagination,
-    tableSearch,
-    isLoading,
-    isError,
-    visibleCategoriesTotal,
-    stats,
-    formModal,
-    deleteModal,
-  } = useCategories();
+  const { tableSearch, categoryQuery, stats, formModal, deleteModal } =
+    useCategories();
 
   const columns: TModifiedColumnDef<ICategoryResponseSchema>[] = [
     {
@@ -68,7 +60,15 @@ const CategoriesPage = () => {
       header: "Status",
       accessorKey: "isActive",
       cell: ({ row }) => (
-        <CategoryStatusBadge isActive={row.original.isActive} />
+        <UiBadge
+          displayUnit={row.original.isActive ? "Active" : "Inactive"}
+          className={cn(
+            "p-1",
+            row.original.isActive
+              ? "bg-success-soft text-success"
+              : "bg-error-soft text-error",
+          )}
+        />
       ),
     },
     {
@@ -126,7 +126,7 @@ const CategoriesPage = () => {
             Categories
           </h1>
           <p className="mt-1 text-sm text-text-muted">
-            {categories.length} of {visibleCategoriesTotal ?? 0} categories
+            Create, update and manage catgories in your inventory
           </p>
         </div>
         <UiButton
@@ -140,21 +140,20 @@ const CategoriesPage = () => {
 
       <div className="grid gap-4 md:grid-cols-3">
         {summaryCardInfo.map((info) => (
-          <CategorySummaryCard
-            key={info.label}
-            icon={info.icon}
-            label={info.label}
-            value={info.value}
-          />
+          <UiSummaryCard {...info} key={info.label} />
         ))}
       </div>
 
       <UiTable
-        data={categories}
+        data={categoryQuery.categories}
         columns={columns}
-        isLoading={isLoading}
-        isError={isError}
-        pagination={pagination}
+        isLoading={categoryQuery.isLoading}
+        isError={categoryQuery.isError}
+        refreshAction={{
+          onRefresh: categoryQuery.onRefetch,
+          isRefreshing: categoryQuery.isRefetching,
+        }}
+        pagination={categoryQuery.pagination}
         emptyMessage="No categories found."
         searchBarProps={{
           placeholder: "Search categories by name, descirption...",

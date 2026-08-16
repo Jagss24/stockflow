@@ -11,4 +11,9 @@ export const API_ENDPOINTS = {
     stats: "/categories/stats",
     single: (id: string) => `/categories/${id}`,
   },
+  warehouses: {
+    list: "/warehouses",
+    stats: "/warehouses/stats",
+    single: (id: string) => `/warehouses/${id}`,
+  },
 } as const;
