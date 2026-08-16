@@ -8,7 +8,9 @@ import {
   TCreateWarehouseData,
   TUpdateWarehouseData,
   TWarehouseListQuery,
+  TWarehouseStatsGroupBy,
 } from "../types/warehouse.type.js";
+import { TStatsGroup } from "../types/stats.type.js";
 
 const findWarehouses = async (query: TWarehouseListQuery) => {
   const { filters, page, limit, search } = query;
@@ -62,6 +64,32 @@ const findWarehouses = async (query: TWarehouseListQuery) => {
   };
 };
 
+function findWarehouseStats(groupBy: "isActive"): Promise<TStatsGroup<boolean>[]>;
+function findWarehouseStats(groupBy: "city"): Promise<TStatsGroup<string>[]>;
+async function findWarehouseStats(groupBy: TWarehouseStatsGroupBy) {
+  if (groupBy === "isActive") {
+    const groups = await prisma.warehouse.groupBy({
+      by: ["isActive"],
+      _count: { _all: true },
+    });
+
+    return groups.map((group) => ({
+      value: group.isActive,
+      count: group._count._all,
+    }));
+  }
+
+  const groups = await prisma.warehouse.groupBy({
+    by: ["city"],
+    _count: { _all: true },
+  });
+
+  return groups.map((group) => ({
+    value: group.city,
+    count: group._count._all,
+  }));
+}
+
 const findWarehouseById = async (id: number) => {
   const warehouse = await prisma.warehouse.findUnique({
     where: { id },
@@ -105,6 +133,7 @@ const deleteWarehouseById = async (id: number) => {
 
 export {
   findWarehouses,
+  findWarehouseStats,
   findWarehouseById,
   findWarehouseByCode,
   createWarehouse,

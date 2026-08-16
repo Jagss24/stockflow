@@ -10,6 +10,7 @@ type TUpdateWarehouseData = Partial<TCreateWarehouseData>;
 
 type TWarehouseFilterKey = "name" | "code" | "city" | "state" | "isActive";
 type TWarehouseIncludeKey = never;
+type TWarehouseStatsGroupBy = "isActive" | "city";
 type TWarehouseListQuery = TParsedListQuery<
   TWarehouseFilterKey,
   TWarehouseIncludeKey
@@ -21,5 +22,6 @@ export type {
   TUpdateWarehouseData,
   TWarehouseFilterKey,
   TWarehouseIncludeKey,
+  TWarehouseStatsGroupBy,
   TWarehouseListQuery,
 };

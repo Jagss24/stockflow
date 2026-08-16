@@ -4,6 +4,7 @@ import {
   deleteWarehouseById,
   findWarehouseByCode,
   findWarehouseById,
+  findWarehouseStats,
   findWarehouses,
   updateWarehouseById,
 } from "../repositories/warehouse.repository.js";
@@ -11,11 +12,37 @@ import {
   TCreateWarehouseBody,
   TUpdateWarehouseBody,
 } from "../schemas/warehouse.schema.js";
-import { TWarehouseListQuery } from "../types/warehouse.type.js";
+import {
+  TWarehouseListQuery,
+  TWarehouseStatsGroupBy,
+} from "../types/warehouse.type.js";
+import { createGroupedStats } from "../utils/grouped-stats.js";
 
 const getAllWarehouses = async (query: TWarehouseListQuery) => {
   const warehouses = await findWarehouses(query);
   return warehouses;
+};
+
+const getWarehouseStats = async (groupBy: TWarehouseStatsGroupBy) => {
+  if (groupBy === "isActive") {
+    const groups = await findWarehouseStats(groupBy);
+
+    return createGroupedStats({
+      resource: "warehouses",
+      groupBy,
+      groups,
+      expectedValues: [true, false],
+    });
+  }
+
+  const groups = await findWarehouseStats(groupBy);
+
+  return createGroupedStats({
+    resource: "warehouses",
+    groupBy,
+    groups,
+    expectedValues: groups.map((group) => group.value),
+  });
 };
 
 const getWarehouseById = async (id: number) => {
@@ -32,7 +59,9 @@ const createNewWarehouse = async (body: TCreateWarehouseBody) => {
   const existingWarehouse = await findWarehouseByCode(body.code);
 
   if (existingWarehouse) {
-    throw new ConflictError("Warehouse code already exists");
+    throw new ConflictError("Warehouse code already exists", [
+      { field: "code", message: "Warehouse code already exists" },
+    ]);
   }
 
   const warehouse = await createWarehouse({
@@ -61,7 +90,9 @@ const updateExistingWarehouse = async (
     const warehouseWithSameCode = await findWarehouseByCode(body.code);
 
     if (warehouseWithSameCode && warehouseWithSameCode.id !== id) {
-      throw new ConflictError("Warehouse code already exists");
+      throw new ConflictError("Warehouse code already exists", [
+        { field: "code", message: "Warehouse code already exists" },
+      ]);
     }
   }
 
@@ -81,6 +112,7 @@ const deleteExistingWarehouse = async (id: number) => {
 
 export {
   getAllWarehouses,
+  getWarehouseStats,
   getWarehouseById,
   createNewWarehouse,
   updateExistingWarehouse,

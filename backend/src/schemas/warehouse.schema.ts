@@ -4,6 +4,7 @@ import {
   TWarehouseFilterKey,
   TWarehouseIncludeKey,
 } from "../types/warehouse.type.js";
+import { createStatsQuerySchema } from "./stats.schema.js";
 
 const warehouseIdSchema = z.object({
   id: z.coerce
@@ -46,14 +47,23 @@ const warehouseListQueryConfig: TListQueryConfig<
   allowedIncludes: [],
 };
 
+const warehouseStatsQuerySchema = createStatsQuerySchema(["isActive", "city"]);
+
 type TWarehouseIdParams = z.infer<typeof warehouseIdSchema>;
 type TCreateWarehouseBody = z.infer<typeof createWarehouseSchema>;
 type TUpdateWarehouseBody = z.infer<typeof updateWarehouseSchema>;
+type TWarehouseStatsQuery = z.infer<typeof warehouseStatsQuerySchema>;
 
 export {
   warehouseIdSchema,
   createWarehouseSchema,
   updateWarehouseSchema,
+  warehouseStatsQuerySchema,
   warehouseListQueryConfig,
 };
-export type { TWarehouseIdParams, TCreateWarehouseBody, TUpdateWarehouseBody };
+export type {
+  TWarehouseIdParams,
+  TCreateWarehouseBody,
+  TUpdateWarehouseBody,
+  TWarehouseStatsQuery,
+};
