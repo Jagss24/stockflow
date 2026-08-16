@@ -1,8 +1,10 @@
 import { getValidatedParams } from "../helpers/validate-params.js";
+import { getValidatedQuery } from "../helpers/validate-query.js";
 import {
   customerListQueryConfig,
   TCreateCustomerBody,
   TCustomerIdParams,
+  TCustomerStatsQuery,
   TUpdateCustomerBody,
 } from "../schemas/customer.schema.js";
 import {
@@ -10,6 +12,7 @@ import {
   deleteExistingCustomer,
   getAllCustomers,
   getCustomerById,
+  getCustomerStats,
   updateExistingCustomer,
 } from "../services/customer.service.js";
 import { parseListQuery } from "../utils/api-query.js";
@@ -35,6 +38,13 @@ const getCustomer = asyncHandler(async (req, res) => {
   return res.status(200).json({ data: customer, success: true });
 });
 
+const getCustomersStats = asyncHandler(async (req, res) => {
+  const { groupBy } = getValidatedQuery<TCustomerStatsQuery>(req);
+  const stats = await getCustomerStats(groupBy);
+
+  return res.status(200).json({ data: stats, success: true });
+});
+
 const createCustomer = asyncHandler<TCreateCustomerBody>(async (req, res) => {
   const customer = await createNewCustomer(req.body);
   return res.status(201).json({ data: customer, success: true });
@@ -55,6 +65,7 @@ const deleteCustomer = asyncHandler(async (req, res) => {
 export {
   getCustomers,
   getCustomer,
+  getCustomersStats,
   createCustomer,
   updateCustomer,
   deleteCustomer,

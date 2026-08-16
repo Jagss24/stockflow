@@ -7,8 +7,10 @@ import {
 import {
   TCreateCustomerData,
   TCustomerListQuery,
+  TCustomerStatsGroupBy,
   TUpdateCustomerData,
 } from "../types/customer.type.js";
+import { TStatsGroup } from "../types/stats.type.js";
 
 const findCustomers = async (query: TCustomerListQuery) => {
   const { filters, page, limit, search } = query;
@@ -88,6 +90,20 @@ const findCustomerById = async (id: number) => {
   return customer;
 };
 
+const findCustomerStats = async (
+  groupBy: TCustomerStatsGroupBy,
+): Promise<TStatsGroup<boolean>[]> => {
+  const groups = await prisma.customer.groupBy({
+    by: [groupBy],
+    _count: { _all: true },
+  });
+
+  return groups.map((group) => ({
+    value: group.isActive,
+    count: group._count._all,
+  }));
+};
+
 const createCustomer = async (data: TCreateCustomerData) => {
   const customer = await prisma.customer.create({
     data,
@@ -116,6 +132,7 @@ const deleteCustomerById = async (id: number) => {
 export {
   findCustomers,
   findCustomerById,
+  findCustomerStats,
   createCustomer,
   updateCustomerById,
   deleteCustomerById,

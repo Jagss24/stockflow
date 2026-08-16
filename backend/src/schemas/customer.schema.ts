@@ -4,6 +4,7 @@ import {
   TCustomerFilterKey,
   TCustomerIncludeKey,
 } from "../types/customer.type.js";
+import { createStatsQuerySchema } from "./stats.schema.js";
 
 const customerIdSchema = z.object({
   id: z.coerce
@@ -21,12 +22,7 @@ const createCustomerSchema = z.object({
     .string({ error: "Contact person name is required" })
     .trim()
     .min(1, "Contact person name is required"),
-  email: z
-    .string()
-    .trim()
-    .email("Invalid email")
-    .optional()
-    .or(z.literal("")),
+  email: z.string().trim().email("Invalid email").optional().or(z.literal("")),
   phone: z
     .string({ error: "Phone is required" })
     .trim()
@@ -43,8 +39,18 @@ const createCustomerSchema = z.object({
     .string({ error: "City is required" })
     .trim()
     .min(1, "City is required"),
-  state: z.string().trim().min(1, "State cannot be empty").optional(),
-  gstNumber: z.string().trim().min(1, "GST number cannot be empty").optional(),
+  state: z
+    .string()
+    .trim()
+    .min(1, "State cannot be empty")
+    .optional()
+    .or(z.literal("")),
+  gstNumber: z
+    .string()
+    .trim()
+    .min(1, "GST number cannot be empty")
+    .optional()
+    .or(z.literal("")),
   isActive: z.boolean().optional(),
 });
 
@@ -72,14 +78,23 @@ const customerListQueryConfig: TListQueryConfig<
   allowedIncludes: [],
 };
 
+const customerStatsQuerySchema = createStatsQuerySchema(["isActive"]);
+
 type TCustomerIdParams = z.infer<typeof customerIdSchema>;
 type TCreateCustomerBody = z.infer<typeof createCustomerSchema>;
 type TUpdateCustomerBody = z.infer<typeof updateCustomerSchema>;
+type TCustomerStatsQuery = z.infer<typeof customerStatsQuerySchema>;
 
 export {
   customerIdSchema,
   createCustomerSchema,
   updateCustomerSchema,
+  customerStatsQuerySchema,
   customerListQueryConfig,
 };
-export type { TCustomerIdParams, TCreateCustomerBody, TUpdateCustomerBody };
+export type {
+  TCustomerIdParams,
+  TCreateCustomerBody,
+  TUpdateCustomerBody,
+  TCustomerStatsQuery,
+};

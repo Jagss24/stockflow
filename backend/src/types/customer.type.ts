@@ -27,6 +27,7 @@ type TCustomerFilterKey =
   | "gstNumber"
   | "isActive";
 type TCustomerIncludeKey = never;
+type TCustomerStatsGroupBy = "isActive";
 type TCustomerListQuery = TParsedListQuery<
   TCustomerFilterKey,
   TCustomerIncludeKey
@@ -38,5 +39,6 @@ export type {
   TUpdateCustomerData,
   TCustomerFilterKey,
   TCustomerIncludeKey,
+  TCustomerStatsGroupBy,
   TCustomerListQuery,
 };

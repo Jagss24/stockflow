@@ -3,6 +3,7 @@ import {
   createCustomer,
   deleteCustomerById,
   findCustomerById,
+  findCustomerStats,
   findCustomers,
   updateCustomerById,
 } from "../repositories/customer.repository.js";
@@ -10,7 +11,11 @@ import {
   TCreateCustomerBody,
   TUpdateCustomerBody,
 } from "../schemas/customer.schema.js";
-import { TCustomerListQuery } from "../types/customer.type.js";
+import {
+  TCustomerListQuery,
+  TCustomerStatsGroupBy,
+} from "../types/customer.type.js";
+import { createGroupedStats } from "../utils/grouped-stats.js";
 
 const getAllCustomers = async (query: TCustomerListQuery) => {
   const customers = await findCustomers(query);
@@ -27,6 +32,17 @@ const getCustomerById = async (id: number) => {
   return customer;
 };
 
+const getCustomerStats = async (groupBy: TCustomerStatsGroupBy) => {
+  const groups = await findCustomerStats(groupBy);
+
+  return createGroupedStats({
+    resource: "customers",
+    groupBy,
+    groups,
+    expectedValues: [true, false],
+  });
+};
+
 const createNewCustomer = async (body: TCreateCustomerBody) => {
   const customer = await createCustomer({
     businessName: body.businessName,
@@ -36,8 +52,8 @@ const createNewCustomer = async (body: TCreateCustomerBody) => {
     billingAddress: body.billingAddress,
     shippingAddress: body.shippingAddress,
     city: body.city,
-    state: body.state ?? null,
-    gstNumber: body.gstNumber ?? null,
+    state: body.state || null,
+    gstNumber: body.gstNumber || null,
     isActive: body.isActive ?? true,
   });
 
@@ -57,6 +73,8 @@ const updateExistingCustomer = async (
   const updatedCustomer = await updateCustomerById(id, {
     ...body,
     email: body.email === "" ? null : body.email,
+    state: body.state === "" ? null : body.state,
+    gstNumber: body.gstNumber === "" ? null : body.gstNumber,
   });
   return updatedCustomer;
 };
@@ -74,6 +92,7 @@ const deleteExistingCustomer = async (id: number) => {
 export {
   getAllCustomers,
   getCustomerById,
+  getCustomerStats,
   createNewCustomer,
   updateExistingCustomer,
   deleteExistingCustomer,
