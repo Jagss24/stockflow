@@ -3,4 +3,5 @@ export const QUERY_KEYS = {
   user: ["user"],
   categories: ["categories"],
   warehouses: ["warehouses"],
+  customers: ["customers"],
 } as const;
