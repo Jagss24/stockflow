@@ -2,16 +2,21 @@ import { CircleAlert, RefreshCcw } from "lucide-react";
 import { TableCell, TableRow } from "./TableRow";
 import UiButton from "../../Buttons/UiButton";
 
+interface ITableRefreshAction {
+  onRefresh: () => void;
+  isRefreshing?: boolean;
+}
+
 interface ITableErrorStateProps {
   colSpan: number;
   message?: string;
-  onRefetch?: () => void;
+  refreshAction?: ITableRefreshAction;
 }
 
 const TableErrorState = ({
   colSpan,
   message = "Something went wrong while loading the data.",
-  onRefetch,
+  refreshAction,
 }: ITableErrorStateProps) => {
   return (
     <TableRow>
@@ -23,13 +28,15 @@ const TableErrorState = ({
           <CircleAlert aria-hidden="true" className="size-5" />
           <span>{message}</span>
         </div>
-        {onRefetch && (
+        {refreshAction && (
           <UiButton
             className="shadow-none h-8 mt-4"
             variant="default"
             leftIcon={<RefreshCcw className="size-4 text-text-muted" />}
+            onClick={refreshAction.onRefresh}
+            isLoading={refreshAction.isRefreshing}
           >
-            Refetch
+            Retry
           </UiButton>
         )}
       </TableCell>
@@ -38,4 +45,4 @@ const TableErrorState = ({
 };
 
 export default TableErrorState;
-export type { ITableErrorStateProps };
+export type { ITableErrorStateProps, ITableRefreshAction };

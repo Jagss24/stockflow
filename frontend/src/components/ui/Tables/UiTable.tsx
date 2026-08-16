@@ -12,9 +12,13 @@ import TableSearchbar, {
 import TableEmptyState from "./components/TableEmptyState";
 import TableErrorState, {
   ITableErrorStateProps,
+  ITableRefreshAction,
 } from "./components/TableErrorState";
 import TableLoadingState from "./components/TableLoadingState";
 import TablePagination from "./components/TablePagination";
+import UiButton from "../Buttons/UiButton";
+import { RefreshCcw } from "lucide-react";
+import { cn } from "@/lib/clsx";
 
 const uiTableFeatures = tableFeatures({});
 
@@ -27,12 +31,13 @@ interface IUiTableProps<T extends RowData> {
   columns: TModifiedColumnDef<T>[];
   data: T[];
   searchBarProps?: TTableSearchBarProps;
-  errorState?: Omit<ITableErrorStateProps, "colSpan">;
+  errorState?: Omit<ITableErrorStateProps, "colSpan" | "refreshAction">;
   isLoading?: boolean;
   isError?: boolean;
   emptyMessage?: string;
   pagination?: IPaginationMeta;
   onPageChange?: (page: number) => void;
+  refreshAction?: ITableRefreshAction;
 }
 const UiTable = <T extends RowData>({
   columns,
@@ -44,6 +49,7 @@ const UiTable = <T extends RowData>({
   emptyMessage = "No data found.",
   pagination,
   onPageChange,
+  refreshAction,
 }: IUiTableProps<T>) => {
   const table = useTable({
     data,
@@ -60,7 +66,13 @@ const UiTable = <T extends RowData>({
     }
 
     if (isError) {
-      return <TableErrorState colSpan={colSpan} {...errorState} />;
+      return (
+        <TableErrorState
+          colSpan={colSpan}
+          refreshAction={refreshAction}
+          {...errorState}
+        />
+      );
     }
 
     if (rows.length === 0) {
@@ -83,8 +95,23 @@ const UiTable = <T extends RowData>({
       role="region"
       className="w-full overflow-hidden rounded-xl border border-border bg-surface shadow-card"
     >
-      <div className="p-3 border-b border-border">
+      <div className="flex items-center gap-2 p-3 border-b border-border">
         <TableSearchbar {...searchBarProps} />
+        {refreshAction && (
+          <UiButton
+            className=""
+            onClick={refreshAction.onRefresh}
+            disabled={refreshAction.isRefreshing}
+            aria-label="Refresh table"
+          >
+            <RefreshCcw
+              className={cn(
+                "size-4 text-text-muted",
+                refreshAction.isRefreshing && "animate-spin",
+              )}
+            />
+          </UiButton>
+        )}
       </div>
       <table className="w-full">
         <thead>
